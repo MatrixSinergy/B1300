@@ -1,0 +1,670 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EnglishScore B1 — Curso Interactivo Offline (Días 1 al 6)</title>
+  <style>
+    :root { color-scheme: light; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: #f8fafc;
+      color: #0f172a;
+      line-height: 1.55;
+    }
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid #e2e8f0;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+    .header-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand { font-size: 18px; font-weight: 700; color: #0f172a; }
+    .top-nav { display: flex; flex-wrap: wrap; gap: 8px; }
+    .nav-btn {
+      border: 1px solid #e2e8f0;
+      background: #ffffff;
+      color: #334155;
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .nav-btn.active { background: #0f172a; color: #ffffff; border-color: #0f172a; }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 24px 20px 60px; }
+    .card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+    .kicker { font-size: 12px; color: #64748b; font-weight: 600; }
+    h1, h2, h3 { margin: 6px 0 10px; color: #0f172a; }
+    h2 { font-size: 22px; }
+    h3 { font-size: 16px; }
+    .day-strip { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+    .stage-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      background: #e2e8f0;
+      padding: 4px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+    }
+    .stage-btn {
+      flex: 1;
+      min-width: 130px;
+      border: none;
+      background: transparent;
+      padding: 9px 12px;
+      border-radius: 7px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #475569;
+      cursor: pointer;
+    }
+    .stage-btn.active { background: #ffffff; color: #0f172a; box-shadow: 0 1px 2px rgba(0,0,0,0.06); }
+    .btn-primary {
+      background: #1d4ed8;
+      color: #ffffff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-primary:hover { background: #1e40af; }
+    .btn-secondary {
+      background: #ffffff;
+      color: #1e293b;
+      border: 1px solid #cbd5e1;
+      padding: 9px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 14px; }
+    th, td { border: 1px solid #e2e8f0; padding: 10px 12px; text-align: left; }
+    th { background: #f8fafc; font-size: 12px; color: #475569; }
+    .bad { color: #b91c1c; font-weight: 500; }
+    .good { color: #047857; font-weight: 600; }
+    .rule-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin: 10px 0;
+    }
+    .formula {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 13px;
+      color: #1d4ed8;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      padding: 8px 10px;
+      border-radius: 6px;
+      margin: 6px 0;
+      display: block;
+    }
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+    .opt-btn {
+      width: 100%;
+      text-align: left;
+      padding: 14px;
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .opt-btn:hover:not(:disabled) { border-color: #1d4ed8; background: #eff6ff; }
+    .opt-btn.ok { border-color: #059669; background: #ecfdf5; color: #065f46; }
+    .opt-btn.err { border-color: #dc2626; background: #fef2f2; color: #991b1b; }
+    .timer {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-weight: 700;
+      font-size: 15px;
+      font-variant-numeric: tabular-nums;
+    }
+    .urgent { color: #b91c1c; }
+    .feedback {
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid;
+      font-size: 14px;
+    }
+    .feedback.ok { background: #ecfdf5; border-color: #a7f3d0; color: #065f46; }
+    .feedback.err { background: #fef2f2; border-color: #fecaca; color: #991b1b; }
+    .warn-box { background: #fffbeb; border: 1px solid #fde68a; color: #92400e; padding: 14px; border-radius: 8px; margin-top: 14px; }
+    .token-wrap { display: flex; flex-wrap: wrap; gap: 8px; padding: 16px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; margin: 14px 0; }
+    .token {
+      padding: 6px 10px;
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .token.subject { background: #dbeafe; border-color: #2563eb; color: #1e3a8a; font-weight: 600; }
+    .token.verb { background: #d1fae5; border-color: #059669; color: #064e3b; font-weight: 600; }
+    .token.contrast { background: #fef3c7; border-color: #d97706; color: #78350f; font-weight: 600; }
+    .token.wrong { background: #fee2e2; border-color: #dc2626; color: #7f1d1d; text-decoration: line-through; }
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+    .progress-bar { height: 6px; background: #e2e8f0; border-radius: 99px; overflow: hidden; margin: 12px 0 18px; }
+    .progress-fill { height: 100%; background: #1d4ed8; transition: width 0.2s; }
+    .check-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid #f1f5f9;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="brand">EnglishScore B1 — Curso Interactivo Offline</div>
+      <div class="top-nav">
+        <button class="nav-btn active" id="nav-trainer" onclick="setSection('trainer')">Entrenador (Días 1–6)</button>
+        <button class="nav-btn" id="nav-skimming" onclick="setSection('skimming')">Modo Skimming (15s)</button>
+        <button class="nav-btn" id="nav-risks" onclick="setSection('risks')">Riesgos Días 7–10</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap" id="app"></main>
+
+  <script>
+    const COURSE = {"days":[{"id":1,"shortTitle":"Día 1","title":"Desfosilización L1: Sujetos y Posesión","objective":"Erradicar el calco del verbo \"tener\" (have) para edad y sensaciones físicas, e internalizar la pluralidad obligatoria de \"people\".","timeLimitLabel":"Límite total 10:00 · Meta 100%","questionTimeLimitSec":null,"totalExamTimeLimitSec":600,"targetAccuracy":100,"execution":{"principle":"El algoritmo de EnglishScore penaliza severamente en los primeros 5 ítems la transferencia literal del español. En inglés, la edad, los estados físicos y las sensaciones son identidad (verbo TO BE =), nunca posesión (HAVE). Además, \"people\" es siempre plural gramatical.","l1TrapExamples":[{"wrong":"I have 25 years old.","right":"I am 25 years old.","reason":"La edad es un estado de ser (=), jamás una posesión."},{"wrong":"She has very hungry after work.","right":"She is very hungry after work.","reason":"Hambre, sed, frío, calor, miedo y sueño usan TO BE + adjetivo."},{"wrong":"The people in my office is very friendly.","right":"The people in my office are very friendly.","reason":"\"People\" equivale a \"personas\" (plural obligatorio: are / were / have)."},{"wrong":"Is very cold today in Bogotá.","right":"It is very cold today in Bogotá.","reason":"El inglés prohíbe verbos sin sujeto explícito; usa sujeto expletivo \"It\"."}],"rules":[{"title":"Edad y Estados Físicos (=)","formula":"Sujeto + am / is / are + [edad | hungry | thirsty | cold | hot | sleepy | afraid | right]","note":"Si en español usas \"tener + sustantivo\", en inglés traduces a \"to be + adjetivo\"."},{"title":"Sustantivos Colectivos Engañosos","formula":"People / Police + ARE / WERE / HAVE (Plural)","note":"Everyone / Everybody / Someone + IS / WAS / HAS (Singular)."},{"title":"Sujeto Vacío Obligatorio","formula":"IT + is / was + [clima | hora | distancia | adjetivo]","note":"Nunca comiences una oración declarativa directamente con \"Is...\"."}]},"verificationMode":"gap-fill-mc","verificationInstructions":"Batería de 20 oraciones trampa. Completa cada hueco eligiendo la forma gramatical que evita la interferencia del español. Meta: 20/20 en menos de 10 minutos.","questions":[{"id":"d1-q1","prompt":"My younger brother ______ 19 years old next month.","options":["has","is","have"],"correctAnswer":"is","trapWarning":"Trampa L1: \"tiene 19 años\" induce a marcar \"has\".","explanation":"La edad siempre se expresa con el verbo to be (is/will be)."},{"id":"d1-q2","prompt":"Please turn on the heater; I ______ freezing in this room.","options":["have","am","has"],"correctAnswer":"am","trapWarning":"Trampa L1: \"tengo mucho frío\" sugiere \"have\".","explanation":"Sensaciones térmicas (cold, hot, freezing) requieren to be."},{"id":"d1-q3","prompt":"Most people in this city ______ by bus during the week.","options":["travels","travel","is traveling"],"correctAnswer":"travel","trapWarning":"Trampa L1: \"la gente viaja\" (singular en español).","explanation":"\"People\" es plural; el verbo en presente simple no lleva -s."},{"id":"d1-q4","prompt":"______ very important to check your grammar before submitting.","options":["Is","It is","There is"],"correctAnswer":"It is","trapWarning":"Trampa L1: omisión del sujeto (\"Es muy importante\").","explanation":"El inglés exige el sujeto gramatical \"It\" antes de \"is\"."},{"id":"d1-q5","prompt":"We worked six hours without a break, so we ______ really hungry.","options":["have","are","had"],"correctAnswer":"are","trapWarning":"Trampa L1: \"tenemos hambre\".","explanation":"\"Hungry\" es un adjetivo; se vincula con to be (are)."},{"id":"d1-q6","prompt":"How old ______ your parents when they moved to Madrid?","options":["had","were","was"],"correctAnswer":"were","trapWarning":"Trampa L1: \"¿qué edad tenían?\" induce a usar \"had\".","explanation":"Edad en pasado plural requiere \"were\"."},{"id":"d1-q7","prompt":"The local police ______ investigating the missing equipment.","options":["is","are","has"],"correctAnswer":"are","trapWarning":"Trampa L1: \"la policía está\" (singular en español).","explanation":"\"Police\" siempre concuerda en plural en inglés."},{"id":"d1-q8","prompt":"You ______ completely right about the deadline change.","options":["have","are","is"],"correctAnswer":"are","trapWarning":"Trampa L1: \"tienes toda la razón\".","explanation":"Tener razón en inglés es \"to be right\"."},{"id":"d1-q9","prompt":"Do you want some water? You look like you ______ thirsty.","options":["have","are","do"],"correctAnswer":"are","trapWarning":"Trampa L1: \"tienes sed\".","explanation":"\"Thirsty\" es un estado (=), usa \"are\"."},{"id":"d1-q10","prompt":"Many people ______ waiting outside the main auditorium right now.","options":["is","are","was"],"correctAnswer":"are","trapWarning":"Trampa L1: \"mucha gente está esperando\".","explanation":"\"Many people\" exige auxiliar plural \"are\"."},{"id":"d1-q11","prompt":"I didn’t sleep well last night, so I ______ extremely sleepy.","options":["have","am","feel have"],"correctAnswer":"am","trapWarning":"Trampa L1: \"tengo sueño\".","explanation":"\"Sleepy\" significa con sueño; se usa con \"am\" (o feel)."},{"id":"d1-q12","prompt":"______ a lot of traffic on the highway this morning.","options":["It is","There is","Are"],"correctAnswer":"There is","trapWarning":"Confusión entre existencia (\"hay\") y descripción (\"es\").","explanation":"\"There is\" expresa existencia para sustantivos incontables (traffic)."},{"id":"d1-q13","prompt":"Everyone in the marketing department ______ ready for the audit.","options":["are","is","have"],"correctAnswer":"is","trapWarning":"Confusión con \"people\": \"everyone\" suena plural pero es singular.","explanation":"Pronombres indefinidos (-one, -body) llevan verbo en singular (is)."},{"id":"d1-q14","prompt":"Don’t open the window; the kids ______ afraid of the storm.","options":["have","are","is"],"correctAnswer":"are","trapWarning":"Trampa L1: \"tienen miedo\".","explanation":"Tener miedo se construye como \"to be afraid of\"."},{"id":"d1-q15","prompt":"My grandmother ______ 82, and she still walks three kilometers daily.","options":["has","is","have"],"correctAnswer":"is","trapWarning":"Trampa L1: \"tiene 82\".","explanation":"Incluso sin \"years old\", la edad usa \"is\"."},{"id":"d1-q16","prompt":"Those people ______ never worked with international clients before.","options":["has","have","is"],"correctAnswer":"have","trapWarning":"Trampa L1: \"esa gente nunca ha trabajado\" (singular).","explanation":"\"Those people\" es plural -\u003e auxiliar \"have\"."},{"id":"d1-q17","prompt":"______ raining heavily, so take an umbrella before leaving.","options":["Is","It is","There is"],"correctAnswer":"It is","trapWarning":"Trampa L1: \"Está lloviendo\" sin sujeto.","explanation":"Verbos meteorológicos requieren sujeto \"It\"."},{"id":"d1-q18","prompt":"If you wear a heavy coat indoors, you will ______ too hot.","options":["have","be","has"],"correctAnswer":"be","trapWarning":"Trampa L1: \"vas a tener mucho calor\".","explanation":"Futuro de estado físico: \"will be hot\"."},{"id":"d1-q19","prompt":"We ______ very lucky to get seats on the last train home.","options":["had","were","was"],"correctAnswer":"were","trapWarning":"Trampa L1: \"tuvimos mucha suerte\".","explanation":"\"Lucky\" es adjetivo; con \"we\" requiere \"were\"."},{"id":"d1-q20","prompt":"Why ______ people always complaining about the new schedule?","options":["is","are","does"],"correctAnswer":"are","trapWarning":"Trampa L1: \"¿por qué la gente siempre se queja / está quejándose?\".","explanation":"Pregunta en presente continuo con sujeto plural \"people\" -\u003e \"are\"."}],"fallback":{"title":"Fallback Visual: Identidad (=) vs. Posesión (⊂)","triggerCondition":"Si cometes más de 1 error en la batería de 20 oraciones.","summary":"Deja de traducir palabras sueltas. Pregúntate si el concepto es un objeto físico que puedes guardar en una mochila (HAVE ⊂) o un estado/etiqueta adherida a la persona (TO BE =).","items":[{"label":"25 years old","category":"TO BE (=)","detail":"No puedes meter los años en una caja; eres esa edad."},{"label":"Hungry / Thirsty","category":"TO BE (=)","detail":"Estado fisiológico temporal del sujeto."},{"label":"Cold / Hot","category":"TO BE (=)","detail":"Adjetivo de temperatura corporal o ambiental."},{"label":"Afraid / Lucky / Right","category":"TO BE (=)","detail":"Condición o cualidad del sujeto."},{"label":"People / Police","category":"PLURAL (ARE)","detail":"Siempre equivale a \"they\" -\u003e are / were / have."},{"label":"A passport / Two meetings","category":"HAVE (⊂)","detail":"Posesión real o agenda concreta."}]},"reversion":{"title":"Protocolo de Reversión: Conjugación Pura To Be","triggerCondition":"Si persiste el sesgo del español o fallas en concordancia sujeto-verbo.","summary":"Aísla exclusivamente la mecánica de am / is / are durante 3 minutos antes de reintentar las oraciones trampa.","items":[{"id":"d1-rev-1","prompt":"The people at the conference ______ waiting for the keynote.","options":["is","are","am"],"correct":"are","rule":"People = plural obligatorio (they are)."},{"id":"d1-rev-2","prompt":"My sister and I ______ both nervous before the interview.","options":["is","am","are"],"correct":"are","rule":"My sister and I = we -\u003e are."},{"id":"d1-rev-3","prompt":"Everybody in this room ______ focused on the timer.","options":["are","is","am"],"correct":"is","rule":"Everybody = singular gramatical (he/she/it is)."},{"id":"d1-rev-4","prompt":"______ essential to avoid literal translation.","options":["Is","It is","Are"],"correct":"It is","rule":"Cláusula impersonal exige sujeto expletivo \"It\"."}]}},{"id":2,"shortTitle":"Día 2","title":"Dominio de la Continuidad: Tiempos Perfectos","objective":"Conectar acciones pasadas con el presente usando Presente Perfecto, discriminando since/for y posicionando yet/already/just.","timeLimitLabel":"10 transformaciones · Sin Presente Simple","questionTimeLimitSec":null,"totalExamTimeLimitSec":null,"targetAccuracy":90,"execution":{"principle":"En español decimos \"Vivo aquí desde 2020\" en presente simple. En EnglishScore eso se clasifica inmediatamente como error A1/A2. Toda acción que empezó atrás y sigue vigente exige Presente Perfecto (have/has + participio).","l1TrapExamples":[{"wrong":"I live here since 2020.","right":"I have lived here since 2020.","reason":"La acción cruza desde 2020 hasta hoy: obliga usar have/has + participio."},{"wrong":"She works in this bank for five years.","right":"She has worked in this bank for five years.","reason":"\"For five years\" mide duración vigente; prohíbe presente simple."},{"wrong":"I haven’t finished already the report.","right":"I haven’t finished the report yet.","reason":"\"Yet\" va al final en negativas/preguntas; \"already\" va en afirmativas."}],"rules":[{"title":"Since vs. For","formula":"SINCE + punto de inicio (2020, Monday, I arrived) | FOR + duración (3 years, a long time)","note":"Si puedes responder \"¿desde cuándo?\" usa since; si responde \"¿cuánto tiempo?\" usa for."},{"title":"Posición Sintáctica de Adverbios","formula":"have/has + ALREADY / JUST + participio  |  haven’t/hasn’t + participio + ... + YET","note":"\"Just\" indica acción recién ocurrida (\"acabar de\")."}]},"verificationMode":"translation-input","verificationInstructions":"Transforma estas 10 oraciones del español al inglés usando Presente Perfecto. El sistema bloqueará cualquier intento en presente simple.","questions":[{"id":"d2-q1","prompt":"Vivo aquí desde 2020. (verbo: live)","correctAnswer":"I have lived here since 2020.","acceptedAnswers":["i have lived here since 2020","i've lived here since 2020"],"trapWarning":"Error clásico: \"I live here since 2020\".","explanation":"Punto de inicio (2020) + continuidad hasta hoy = I have lived here since 2020."},{"id":"d2-q2","prompt":"Ella trabaja en esta empresa desde hace cinco años. (verbo: work)","correctAnswer":"She has worked in this company for five years.","acceptedAnswers":["she has worked in this company for five years","she's worked in this company for five years","she has worked at this company for five years","she's worked at this company for five years","she has worked in this company for 5 years","she has worked at this company for 5 years"],"trapWarning":"Error clásico: \"She works...\" o usar \"since five years\".","explanation":"Duración (five years) requiere \"for\" + \"has worked\"."},{"id":"d2-q3","prompt":"Nos conocemos desde la universidad. (verbo: know)","correctAnswer":"We have known each other since university.","acceptedAnswers":["we have known each other since university","we've known each other since university","we have known each other since college","we've known each other since college"],"trapWarning":"Error clásico: \"We know each other...\" o participio regular \"knowed\".","explanation":"\"Know\" es verbo de estado e irregular (know -\u003e known)."},{"id":"d2-q4","prompt":"Todavía no he enviado el correo. (verbo: send)","correctAnswer":"I have not sent the email yet.","acceptedAnswers":["i haven't sent the email yet","i have not sent the email yet","i haven't sent the mail yet","i have not sent the mail yet"],"trapWarning":"Error clásico: poner \"yet\" al principio o usar \"didn't send\".","explanation":"Negativa con expectativa de cumplimiento exige \"haven't + participio + yet\" al final."},{"id":"d2-q5","prompt":"Ellos acaban de llegar a la oficina. (verbo: arrive)","correctAnswer":"They have just arrived at the office.","acceptedAnswers":["they have just arrived at the office","they've just arrived at the office","they have just arrived in the office"],"trapWarning":"Error clásico: traducir \"acaban de\" como \"finish to\".","explanation":"\"Acabar de + infinitivo\" se expresa con \"have/has + just + participio\"."},{"id":"d2-q6","prompt":"Él ya ha terminado el informe. (verbo: finish)","correctAnswer":"He has already finished the report.","acceptedAnswers":["he has already finished the report","he's already finished the report"],"trapWarning":"Error clásico: colocar \"already\" al inicio o usar \"have\" con \"he\".","explanation":"Tercera persona singular usa \"has\" y \"already\" va antes del participio."},{"id":"d2-q7","prompt":"Tengo este portátil desde el lunes. (verbo: have)","correctAnswer":"I have had this laptop since Monday.","acceptedAnswers":["i have had this laptop since monday","i've had this laptop since monday"],"trapWarning":"Doble \"have\": auxiliar \"have\" + participio \"had\".","explanation":"Muchos evitan \"have had\" por sonar repetitivo, pero es obligatorio para posesión continua."},{"id":"d2-q8","prompt":"No hemos visto a Carlos desde marzo. (verbo: see)","correctAnswer":"We have not seen Carlos since March.","acceptedAnswers":["we haven't seen carlos since march","we have not seen carlos since march"],"trapWarning":"Error clásico: usar \"saw\" en lugar del participio \"seen\".","explanation":"Participio irregular de see = seen; punto de partida = since March."},{"id":"d2-q9","prompt":"¿Has estado alguna vez en Londres? (verbo: be)","correctAnswer":"Have you ever been to London?","acceptedAnswers":["have you ever been to london","have you ever been in london"],"trapWarning":"Error clásico: \"Did you ever go...\" o \"gone to\" cuando ya regresaste.","explanation":"Experiencia vital con retorno usa \"been to\", nunca \"gone to\"."},{"id":"d2-q10","prompt":"Estudio inglés desde hace dos meses. (verbo: study)","correctAnswer":"I have studied English for two months.","acceptedAnswers":["i have studied english for two months","i've studied english for two months","i have been studying english for two months","i've been studying english for two months","i have studied english for 2 months","i have been studying english for 2 months"],"trapWarning":"Error clásico: \"I study English since two months ago\".","explanation":"Bloque de duración (\"two months\") requiere \"for\" y Present Perfect."}],"fallback":{"title":"Fallback Visual: Línea de Tiempo Temporal","triggerCondition":"Si usas presente simple (\"I live...\") o confundes since con for.","summary":"Visualiza la línea temporal. Si la flecha nace en el pasado y cruza la frontera del AHORA, el Presente Simple queda prohibido.","items":[{"label":"2020 → AHORA","category":"SINCE","detail":"Marca un punto exacto en el calendario o reloj (since 9 AM, since 2020)."},{"label":"[ 5 años ] → AHORA","category":"FOR","detail":"Mide la longitud del segmento completo (for 5 years, for ten minutes)."},{"label":"Acción recién hecha","category":"JUST","detail":"Va entre auxiliar y participio: \"have JUST arrived\"."},{"label":"Antes de lo esperado","category":"ALREADY","detail":"Va entre auxiliar y participio: \"has ALREADY finished\"."},{"label":"Pendiente en negativa","category":"YET","detail":"Siempre al final de la oración: \"haven't sent it YET\"."}]},"reversion":{"title":"Protocolo de Reversión: Participios Irregulares Críticos","triggerCondition":"Si el fallo es morfológico (escribir \"saw\", \"knowed\" o \"writed\") y no lógico.","summary":"Consolida las 3 columnas de los verbos de mayor frecuencia en EnglishScore B1 antes de ensamblar oraciones completas.","items":[{"id":"d2-rev-1","prompt":"Present: know | Past: knew | Past Participle: ______","options":["knowed","known","knew"],"correct":"known","rule":"know - knew - known"},{"id":"d2-rev-2","prompt":"Present: see | Past: saw | Past Participle: ______","options":["seen","saw","seed"],"correct":"seen","rule":"see - saw - seen"},{"id":"d2-rev-3","prompt":"Present: write | Past: wrote | Past Participle: ______","options":["wrote","writed","written"],"correct":"written","rule":"write - wrote - written"},{"id":"d2-rev-4","prompt":"Present: have | Past: had | Past Participle: ______","options":["haved","has","had"],"correct":"had","rule":"have - had - had (I have had)"}]}},{"id":3,"shortTitle":"Día 3","title":"Condicionalidad y Deducción Modal B1","objective":"Dominar el Segundo Condicional para hipótesis irreales y aplicar modales de deducción lógica (must / can't / might).","timeLimitLabel":"8 micro-diálogos · Precisión lógica","questionTimeLimitSec":null,"totalExamTimeLimitSec":null,"targetAccuracy":88,"execution":{"principle":"EnglishScore evalúa el salto de A2 a B1 mediante dos filtros: hipótesis no reales (Segundo Condicional) y deducción lógica por evidencia. El error más frecuente en hispanohablantes es usar \"mustn't\" para deducir imposibilidad (en inglés se usa \"can't\").","l1TrapExamples":[{"wrong":"She isn’t answering. She mustn’t be at home.","right":"She isn’t answering. She can’t be at home.","reason":"\"Mustn't\" significa prohibición (\"no debes\"), jamás deducción negativa."},{"wrong":"If I would have time, I would go.","right":"If I had time, I would go.","reason":"La cláusula \"If\" nunca lleva \"would\"; usa Pasado Simple."}],"rules":[{"title":"Segundo Condicional (Hipótesis Irreal)","formula":"If + Sujeto + Past Simple (were/had/knew), Sujeto + WOULD + infinitivo","note":"En registro formal B1/B2 se prefiere \"If I were you...\" sobre \"If I was you\"."},{"title":"Escala Matemática de Deducción","formula":"99% Seguro (+) = MUST | 99% Seguro (-) = CAN’T | 50% Probable = MIGHT / MAY","note":"Se deduce a partir de evidencia visible en el diálogo."}]},"verificationMode":"dialogue-deduction","verificationInstructions":"Resuelve estos 8 micro-diálogos deduciendo el estado lógico del personaje según la evidencia o completando hipótesis irreales.","questions":[{"id":"d3-q1","prompt":"A: \"Look, all the lights in Marco’s office are off and his car is gone.\" — B: \"He ______ still be working; it’s 10 PM.\"","options":["mustn't","can't","might"],"correctAnswer":"can't","trapWarning":"Distractor algorítmico clásico: \"mustn't\".","explanation":"Evidencia sólida negativa (99% imposible) exige \"can't\"."},{"id":"d3-q2","prompt":"A: \"Laura has been sneezing all morning and has a fever.\" — B: \"She ______ have the flu. Send her home.\"","options":["must","can","would"],"correctAnswer":"must","trapWarning":"Confusión entre obligación y deducción lógica.","explanation":"Evidencia física clara -\u003e 99% certeza afirmativa -\u003e \"must\"."},{"id":"d3-q3","prompt":"If our team ______ a bigger budget, we would hire two more analysts.","options":["would have","had","has"],"correctAnswer":"had","trapWarning":"Calco español/alemán: meter \"would\" dentro de la cláusula If.","explanation":"Segundo condicional: If + Past Simple (\"had\"), ... would + verbo."},{"id":"d3-q4","prompt":"A: \"Why isn’t David joining the call?\" — B: \"I’m not sure. His train ______ be delayed because of the rain.\"","options":["must","might","can't"],"correctAnswer":"might","trapWarning":"Ignorar la pista \"I’m not sure\" (50% probabilidad).","explanation":"Incertidumbre explícita = 50% probable = \"might\" o \"may\"."},{"id":"d3-q5","prompt":"If I ______ you, I would double-check the contract clauses before signing.","options":["am","were","would be"],"correctAnswer":"were","trapWarning":"Uso de presente o condicional en consejo hipotético.","explanation":"Estructura fija B1: \"If I were you, I would...\"."},{"id":"d3-q6","prompt":"A: \"Elena just ran a marathon in under three hours!\" — B: \"Really? She ______ be exhausted right now.\"","options":["must","may","can't"],"correctAnswer":"must","trapWarning":"Subestimar la certeza de la evidencia (\"ran a marathon\").","explanation":"Conclusión lógica inevitable tras correr un maratón -\u003e \"must\"."},{"id":"d3-q7","prompt":"A: \"Someone left this jacket in the lobby. Is it Tom’s?\" — B: \"No, it ______ be Tom’s; it’s way too small for him.\"","options":["mustn't","can't","might not"],"correctAnswer":"can't","trapWarning":"Elegir \"mustn't\" creyendo que es el opuesto de \"must\".","explanation":"El opuesto deductivo de \"must\" es siempre \"can't\"."},{"id":"d3-q8","prompt":"What would you change in the schedule if you ______ the project manager?","options":["became","would become","become"],"correctAnswer":"became","trapWarning":"Repetir \"would\" en la pregunta condicional.","explanation":"Después de \"if\" en situación hipotética va Pasado Simple (\"became\")."}],"fallback":{"title":"Fallback Matemático: Termómetro de Certeza Modal","triggerCondition":"Si dudas entre must, can't y might o usas mustn't para deducir.","summary":"Traduce la evidencia del diálogo a porcentaje antes de elegir el modal. Nunca uses lógica intuitiva del español.","items":[{"label":"99% Seguro AFIRMATIVO","category":"MUST","detail":"Evidencia total a favor (\"lights are on\", \"ran a marathon\")."},{"label":"99% Seguro NEGATIVO","category":"CAN’T","detail":"Imposibilidad lógica (\"way too small\", \"car is gone\"). Prohibido mustn't."},{"label":"50% Probable / Duda","category":"MIGHT / MAY","detail":"Pistas como \"I'm not sure\", \"perhaps\", \"maybe\"."},{"label":"Prohibición (Regla)","category":"MUSTN’T","detail":"Solo para normas (\"You mustn't smoke here\"), nunca deducción."}]},"reversion":{"title":"Protocolo de Reversión: Aislar Cláusula IF en Pasado","triggerCondition":"Si fallas en la estructura del Segundo Condicional.","summary":"Olvida el \"would\" por un momento y entrena únicamente la primera mitad: después de IF en hipótesis irreales va un verbo en Pasado Simple.","items":[{"id":"d3-rev-1","prompt":"If she ______ (know) the password, ...","options":["knew","would know","knows"],"correct":"knew","rule":"If + Past Simple (sin would)."},{"id":"d3-rev-2","prompt":"If we ______ (live) closer to the office, ...","options":["would live","lived","live"],"correct":"lived","rule":"If + Past Simple (lived)."},{"id":"d3-rev-3","prompt":"If I ______ (be) in charge of hiring, ...","options":["were","would be","am"],"correct":"were","rule":"If + were (hipótesis irreal)."},{"id":"d3-rev-4","prompt":"If they ______ (have) enough data, ...","options":["had","would have","have"],"correct":"had","rule":"If + had."}]}},{"id":4,"shortTitle":"Día 4","title":"Evasión de Trampas Lexicográficas (Falsos Cognados)","objective":"Neutralizar distractores algorítmicos mediante respuesta automática en menos de 20 segundos por palabra.","timeLimitLabel":"20s por palabra · 12 ítems","questionTimeLimitSec":20,"totalExamTimeLimitSec":null,"targetAccuracy":90,"execution":{"principle":"EnglishScore incluye deliberadamente palabras que se escriben casi igual que en español pero significan algo opuesto o distinto. Bajo presión de reloj, el cerebro elige el falso cognado por reflejo. Hay que automatizar la traducción real.","l1TrapExamples":[{"wrong":"Actually = Actualmente (hoy en día)","right":"Actually = De hecho / En realidad","reason":"\"Actualmente\" en inglés es \"currently\" o \"nowadays\"."},{"wrong":"Fabric = Fábrica industrial","right":"Fabric = Tela / Tejido","reason":"\"Fábrica\" en inglés es \"factory\" o \"plant\"."},{"wrong":"Sensible = Emocionalmente frágil","right":"Sensible = Sensato / Prudente / Razonable","reason":"\"Sensible\" emocionalmente es \"sensitive\"."},{"wrong":"Assist = Asistir a una reunión","right":"Assist = Ayudar / Colaborar","reason":"\"Asistir a un evento\" es \"attend\"."}],"rules":[{"title":"Regla de Oro de los 20 Segundos","formula":"Actually (de hecho) ≠ Currently | Fabric (tela) ≠ Factory | Sensible (sensato) ≠ Sensitive | Assist (ayudar) ≠ Attend","note":"También vigila: Library (biblioteca) ≠ Bookstore | Realize (darse cuenta) ≠ Carry out."}]},"verificationMode":"timed-vocab","verificationInstructions":"Test cronometrado de 20 segundos estrictos por palabra. Si el temporizador llega a 00:00, el sistema avanza automáticamente y registra fallo por latencia.","questions":[{"id":"d4-q1","prompt":"\"I thought the meeting was cancelled, but it was ACTUALLY moved to Room B.\" ¿Qué significa ACTUALLY?","options":["Actualmente","De hecho / en realidad","Recientemente"],"correctAnswer":"De hecho / en realidad","trapWarning":"Falso cognado #1: \"actualmente\".","explanation":"Actually = de hecho. Para decir actualmente usa \"currently\"."},{"id":"d4-q2","prompt":"\"This winter coat is made from high-quality wool FABRIC.\" ¿Qué es FABRIC?","options":["Fábrica","Tela / tejido","Maquinaria"],"correctAnswer":"Tela / tejido","trapWarning":"Falso cognado #2: \"fábrica\".","explanation":"Fabric = tela. Fábrica = factory."},{"id":"d4-q3","prompt":"\"Saving 20% of your monthly income is a very SENSIBLE decision.\" ¿Qué es SENSIBLE?","options":["Sensible emocionalmente","Sensata / prudente","Delicada"],"correctAnswer":"Sensata / prudente","trapWarning":"Falso cognado #3: \"sensible\".","explanation":"Sensible = sensato/razonable. Sensible emocional = sensitive."},{"id":"d4-q4","prompt":"\"Two senior engineers will ASSIST the new intern during onboarding.\" ¿Qué es ASSIST?","options":["Asistir presencialmente","Ayudar / apoyar","Evaluar"],"correctAnswer":"Ayudar / apoyar","trapWarning":"Falso cognado #4: \"asistir a un lugar\".","explanation":"Assist = ayudar. Asistir a un evento/clase = attend."},{"id":"d4-q5","prompt":"\"Did you ATTEND the quarterly budget briefing yesterday?\" ¿Qué es ATTEND?","options":["Atender a un cliente","Asistir / ir a","Aplazar"],"correctAnswer":"Asistir / ir a","trapWarning":"Confusión inversa con \"atender\".","explanation":"Attend = asistir a un evento. Atender a alguien = assist / help / serve."},{"id":"d4-q6","prompt":"\"We didn’t REALIZE the server was down until clients called.\" ¿Qué es REALIZE?","options":["Realizar una tarea","Darse cuenta","Reiniciar"],"correctAnswer":"Darse cuenta","trapWarning":"Falso cognado frecuente: \"realizar\".","explanation":"Realize = darse cuenta. Realizar una acción = carry out / perform."},{"id":"d4-q7","prompt":"\"Please borrow the reference manual from the campus LIBRARY.\" ¿Qué es LIBRARY?","options":["Librería (tienda)","Biblioteca","Archivo digital"],"correctAnswer":"Biblioteca","trapWarning":"Falso cognado: \"librería\".","explanation":"Library = biblioteca (préstamo). Librería (compra) = bookstore / bookshop."},{"id":"d4-q8","prompt":"\"EVENTUALLY, after six months of negotiations, both firms signed.\" ¿Qué es EVENTUALLY?","options":["De vez en cuando","Finalmente / con el tiempo","Posiblemente"],"correctAnswer":"Finalmente / con el tiempo","trapWarning":"Falso cognado: \"eventualmente\" (ocasionalmente).","explanation":"Eventually = finalmente, al cabo del tiempo."},{"id":"d4-q9","prompt":"\"She felt EMBARRASSED when she forgot the client’s name.\" ¿Qué es EMBARRASSED?","options":["Embarazada","Avergonzada / incómoda","Enojada"],"correctAnswer":"Avergonzada / incómoda","trapWarning":"Falso cognado clásico: \"embarazada\".","explanation":"Embarrassed = avergonzada. Embarazada = pregnant."},{"id":"d4-q10","prompt":"\"The startup is CURRENTLY hiring backend developers.\" ¿Qué es CURRENTLY?","options":["Habitualmente","Actualmente / en este momento","Rápidamente"],"correctAnswer":"Actualmente / en este momento","trapWarning":"Confusión con \"corrientemente\".","explanation":"Currently = actualmente."},{"id":"d4-q11","prompt":"\"Before the final presentation, let’s RESUME the discussion on pricing.\" ¿Qué es RESUME?","options":["Resumir en pocas líneas","Reanudar / retomar","Cancelar"],"correctAnswer":"Reanudar / retomar","trapWarning":"Falso cognado: \"resumir\".","explanation":"Resume (verbo) = reanudar. Resumir = summarize."},{"id":"d4-q12","prompt":"\"The product launch was a complete SUCCESS.\" vs \"EXIT\". ¿Qué significa EXIT?","options":["Éxito rotundo","Salida","Aumento"],"correctAnswer":"Salida","trapWarning":"Falso cognado fonético: \"éxito\".","explanation":"Exit = salida. Éxito = success."}],"fallback":{"title":"Fallback Mnemotécnico: Anclas en Español","triggerCondition":"Si fallas o excedes los 20 segundos en más de 2 palabras.","summary":"Asocia cada falso cognado con una imagen absurda o frase puente en español para bloquear el reflejo automático.","items":[{"label":"FABRIC → Tela","category":"Mnemotecnia","detail":"\"En la FABRIC hacen tela, en la FACTORY trabajan obreros.\""},{"label":"ACTUALLY → De hecho","category":"Mnemotecnia","detail":"\"ACTUALLY es un acto real (de hecho); CURRENTLY corre ahora mismo.\""},{"label":"SENSIBLE → Sensato","category":"Mnemotecnia","detail":"\"Una persona SENSIBLE tiene sentido común (sensato).\""},{"label":"ASSIST → Ayudar","category":"Mnemotecnia","detail":"\"Un ASISTENTE médico ayuda; tú ATTEND (atiendes y vas) a clase.\""},{"label":"LIBRARY → Biblioteca","category":"Mnemotecnia","detail":"\"En la LIBRARY los libros son libres (gratis); en BOOKSTORE los compras.\""}]},"reversion":{"title":"Protocolo de Reversión: Bloques de 5 Palabras","triggerCondition":"Si la retención a corto plazo colapsa bajo el reloj de 20s.","summary":"Reduce la carga cognitiva entrenando primero el Bloque Nuclear de 4 pares esenciales sin temporizador.","items":[{"id":"d4-rev-1","prompt":"Traduce sin prisa: \"Actually\"","options":["Actualmente","De hecho","Activamente"],"correct":"De hecho","rule":"Actually = in fact / de hecho."},{"id":"d4-rev-2","prompt":"Traduce sin prisa: \"Fabric\"","options":["Fábrica","Tela","Edificio"],"correct":"Tela","rule":"Fabric = cloth / tela."},{"id":"d4-rev-3","prompt":"Traduce sin prisa: \"Sensible\"","options":["Sensato","Emotivo","Frágil"],"correct":"Sensato","rule":"Sensible = practical / sensato."},{"id":"d4-rev-4","prompt":"Traduce sin prisa: \"Assist\"","options":["Asistir a reunión","Ayudar","Firmar"],"correct":"Ayudar","rule":"Assist = help / ayudar."}]}},{"id":5,"shortTitle":"Día 5","title":"Ensamble Corporativo: Phrasal Verbs y Colocaciones","objective":"Distinguir la división ejecutiva do vs. make y dominar phrasal verbs corporativos clave mediante partículas direccionales.","timeLimitLabel":"Informe corporativo · 10 huecos","questionTimeLimitSec":45,"totalExamTimeLimitSec":null,"targetAccuracy":85,"execution":{"principle":"En el bloque corporativo B1, EnglishScore evalúa colocaciones fijas (do vs make) y phrasal verbs de oficina. Traducir palabra por palabra falla porque la partícula (up, down, out) altera la dirección del verbo.","l1TrapExamples":[{"wrong":"We need to do a decision today.","right":"We need to make a decision today.","reason":"Las decisiones se \"fabrican/crean\" (make), no son tareas rutinarias."},{"wrong":"She made her homework / business.","right":"She did her homework / business.","reason":"Tareas, deberes, investigación y negocios usan DO."},{"wrong":"They turned off the job offer.","right":"They turned down the job offer.","reason":"\"Turn down\" = rechazar una oferta (bajar el pulgar); \"turn off\" = apagar un aparato."}],"rules":[{"title":"División Ejecutiva DO vs. MAKE","formula":"DO = tareas/procesos (research, business, a favor, the work) | MAKE = resultados/creación (a decision, a mistake, progress, an offer, money)","note":"Excepción frecuente: \"do your best\" (hacer tu mejor esfuerzo)."},{"title":"Cuarteto Phrasal Corporativo","formula":"SET UP (fundar/configurar) · TURN DOWN (rechazar) · FIND OUT (averiguar) · GIVE UP (rendirse/dejar)","note":"Observa el vector de la partícula: UP (construir o ceder arriba), DOWN (rechazar), OUT (sacar a la luz)."}]},"verificationMode":"corporate-cloze","verificationInstructions":"Completa el memorando corporativo seleccionando el verbo (do/make) o la partícula correcta para cada hueco. Vigila el límite de 45s por ítem.","questions":[{"id":"d5-q1","prompt":"Memo (1/10): \"Last year, Elena decided to set ______ her own logistics consultancy.\"","options":["up","down","out"],"correctAnswer":"up","trapWarning":"Confusión entre fundar (set up) y partir de viaje (set off).","explanation":"Set up = fundar una empresa o configurar un sistema."},{"id":"d5-q2","prompt":"Memo (2/10): \"Before launching, her team had to ______ extensive market research.\"","options":["make","do","put"],"correctAnswer":"do","trapWarning":"Trampa L1: \"hacer investigación\" -\u003e usar \"make\".","explanation":"\"Research\" es una actividad/proceso analítico -\u003e siempre DO research."},{"id":"d5-q3","prompt":"Memo (3/10): \"Unfortunately, two major banks turned ______ her initial loan application.\"","options":["up","out","down"],"correctAnswer":"down","trapWarning":"Confusión con \"turn off\" o \"turn out\".","explanation":"Turn down = rechazar una solicitud, oferta o propuesta."},{"id":"d5-q4","prompt":"Memo (4/10): \"She refused to give ______ and looked for private investors instead.\"","options":["out","up","off"],"correctAnswer":"up","trapWarning":"Traducir \"rendirse\" sin la partícula \"up\".","explanation":"Give up = rendirse o abandonar un proyecto/hábito."},{"id":"d5-q5","prompt":"Memo (5/10): \"Within three weeks, she ______ significant progress with angel investors.\"","options":["did","made","took"],"correctAnswer":"made","trapWarning":"Usar \"did\" con \"progress\".","explanation":"\"Progress\" es un resultado tangible generado -\u003e MAKE progress."},{"id":"d5-q6","prompt":"Memo (6/10): \"However, an audit helped them find ______ that shipping costs were 18% too high.\"","options":["up","out","down"],"correctAnswer":"out","trapWarning":"Confusión entre \"find\" (encontrar objeto) y \"find out\" (descubrir un dato).","explanation":"Find out = descubrir o averiguar información oculta."},{"id":"d5-q7","prompt":"Memo (7/10): \"Management had to ______ a difficult decision regarding regional warehouses.\"","options":["do","make","give"],"correctAnswer":"make","trapWarning":"Trampa L1: \"hacer una decisión\" -\u003e \"do\".","explanation":"Colocación fija obligatoria: MAKE a decision."},{"id":"d5-q8","prompt":"Memo (8/10): \"Once we ______ business with reliable suppliers, delivery times dropped.\"","options":["did","made","set"],"correctAnswer":"did","trapWarning":"Confusión con \"make money\" vs \"do business\".","explanation":"\"Business\" es actividad comercial en curso -\u003e DO business."},{"id":"d5-q9","prompt":"Memo (9/10): \"Even if you ______ a mistake in the first draft, review it before Friday.\"","options":["do","make","find"],"correctAnswer":"make","trapWarning":"Trampa L1: \"hacer/cometer un error\" -\u003e \"do a mistake\".","explanation":"Error creado = MAKE a mistake."},{"id":"d5-q10","prompt":"Memo (10/10): \"We decided to put ______ the expansion until Q3 to protect cash flow.\"","options":["off","up","in"],"correctAnswer":"off","trapWarning":"Confusión entre posponer (put off) y tolerar (put up with).","explanation":"Put off = posponer o aplazar una fecha/reunión."}],"fallback":{"title":"Fallback Vectorial: Agrupación por Preposición Direccional","triggerCondition":"Si confundes los phrasal verbs o tardas \u003e45 segundos por hueco.","summary":"No memorices listas alfabéticas. Decodifica la dirección física de la partícula para deducir el significado en contexto.","items":[{"label":"UP (Construcción / Tope)","category":"Vector UP","detail":"Set up (levantar/fundar un sistema) · Give up (levantar las manos/rendirse)."},{"label":"DOWN (Rechazo / Caída)","category":"Vector DOWN","detail":"Turn down (bajar el pulgar = rechazar oferta o bajar volumen)."},{"label":"OUT (Sacar a la luz)","category":"Vector OUT","detail":"Find out (sacar un dato oculto = averiguar) · Carry out (llevar a cabo)."},{"label":"OFF (Separación / Aplazamiento)","category":"Vector OFF","detail":"Put off (empujar fuera de la fecha actual = posponer)."}]},"reversion":{"title":"Protocolo de Reversión: Colocaciones Fijas Básicas","triggerCondition":"Si los verbos frasales saturan la memoria funcional.","summary":"Estabiliza primero las preposiciones fijas de adjetivos y verbos base que garantizan puntos rápidos en el bloque B1.","items":[{"id":"d5-rev-1","prompt":"Our delivery times depend ______ the weather.","options":["of","on","in"],"correct":"on","rule":"depend ON (nunca \"depend of\" como en español)."},{"id":"d5-rev-2","prompt":"She is married ______ an architect from Lisbon.","options":["with","to","by"],"correct":"to","rule":"married TO (nunca \"married with\")."},{"id":"d5-rev-3","prompt":"Who is responsible ______ updating the database?","options":["of","for","to"],"correct":"for","rule":"responsible FOR."},{"id":"d5-rev-4","prompt":"He is very interested ______ financial analytics.","options":["on","in","about"],"correct":"in","rule":"interested IN."}]}},{"id":6,"shortTitle":"Día 6","title":"Arquitectura y Conexión Textual (Reading)","objective":"Aplicar reglas sintácticas inflexibles de conectores (despite, although, however) en menos de 45 segundos por ítem.","timeLimitLabel":"45s por ítem · Descarte gramatical","questionTimeLimitSec":45,"totalExamTimeLimitSec":null,"targetAccuracy":88,"execution":{"principle":"En el Reading de EnglishScore, los tres conectores de contraste (despite, although, however) significan casi lo mismo, así que no puedes resolverlos traduciendo el sentido. Se resuelven al 100% mirando la estructura gramatical que viene inmediatamente después del hueco.","l1TrapExamples":[{"wrong":"Despite it rained heavily, we arrived on time.","right":"Although it rained heavily, we arrived on time.","reason":"\"It rained\" es una cláusula con verbo conjugado -\u003e prohíbe \"despite\"."},{"wrong":"Although the heavy rain, we arrived on time.","right":"Despite the heavy rain, we arrived on time.","reason":"\"The heavy rain\" es un grupo nominal sin verbo -\u003e prohíbe \"although\"."},{"wrong":"We tried hard, however we missed the train.","right":"We tried hard; however, we missed the train.","reason":"\"However\" no une cláusulas con simple coma; exige punto o punto y coma."}],"rules":[{"title":"Familia Preposicional (DESPITE / IN SPITE OF)","formula":"Despite / In spite of + [Sustantivo | Gerundio -ing | the fact that...]","note":"NUNCA llevan \"of\" después de \"despite\" (prohibido \"despite of\")."},{"title":"Familia Subordinante (ALTHOUGH / EVEN THOUGH)","formula":"Although / Even though + [Sujeto + Verbo conjugado]","note":"Si después del hueco ves un sujeto + verbo flexionado, marca Although."},{"title":"Adverbio Conjuntivo (HOWEVER)","formula":"... ; however, [Sujeto + Verbo]  |  ... . However, [Sujeto + Verbo]","note":"Siempre exige puntuación fuerte antes y una coma inmediatamente después."}]},"verificationMode":"connector-mc","verificationInstructions":"8 ítems cronometrados a 45 segundos máximos por pregunta. No traduzcas toda la frase: inspecciona las 2 palabras posteriores al espacio en blanco y aplica descarte gramatical.","questions":[{"id":"d6-q1","prompt":"______ working overtime all week, the engineering team still missed the launch window.","options":["Although","Despite","However"],"correctAnswer":"Despite","postGapToken":"working overtime (-ing)","postGapType":"noun_gerund","trapWarning":"Traducir \"Aunque trabajaron...\" induce a elegir \"Although\".","explanation":"Después del hueco hay un gerundio (\"working\") sin sujeto ni verbo conjugado -\u003e Despite."},{"id":"d6-q2","prompt":"______ the software update was expensive, it reduced server crashes by 60%.","options":["Despite","In spite of","Even though"],"correctAnswer":"Even though","postGapToken":"the software update WAS (Sujeto + Verbo)","postGapType":"clause_verb","trapWarning":"Keyword trap: ver \"the software update\" y pensar que es solo sustantivo, ignorando \"was\".","explanation":"Hay verbo conjugado (\"was\") -\u003e cláusula completa -\u003e Even though."},{"id":"d6-q3","prompt":"Sales grew by 14% in Europe; ______, operational costs increased even faster.","options":["although","despite","however"],"correctAnswer":"however","postGapToken":", operational costs (coma tras punto y coma)","postGapType":"clause_verb","trapWarning":"Ignorar la puntuación fuerte (punto y coma + coma).","explanation":"Entre punto y coma y coma solo encaja el adverbio conjuntivo \"however\"."},{"id":"d6-q4","prompt":"We decided to continue the outdoor event ______ the sudden drop in temperature.","options":["although","in spite of","however"],"correctAnswer":"in spite of","postGapToken":"the sudden drop (Sintagma nominal)","postGapType":"noun_gerund","trapWarning":"Pensar que falta un verbo implícito y marcar \"although\".","explanation":"\"The sudden drop in temperature\" no tiene verbo conjugado -\u003e in spite of."},{"id":"d6-q5","prompt":"______ she had zero prior experience in finance, Nadia passed the audit exam.","options":["Despite","Although","Despite of"],"correctAnswer":"Although","postGapToken":"she HAD (Sujeto + Verbo)","postGapType":"clause_verb","trapWarning":"Trampa clásica \"Despite of\" (incorrecta en inglés).","explanation":"Sujeto (\"she\") + verbo conjugado (\"had\") exige \"Although\"."},{"id":"d6-q6","prompt":"______ the fact that the flight was delayed, the delegates arrived before dinner.","options":["Although","Despite","However"],"correctAnswer":"Despite","postGapToken":"the fact that... (Sustantivo puente)","postGapType":"noun_gerund","trapWarning":"Ver \"was delayed\" más adelante y olvidar que inmediatamente tras el hueco está \"the fact\".","explanation":"\"Despite the fact that\" convierte una cláusula en sintagma nominal."},{"id":"d6-q7","prompt":"The prototype looks promising. ______, we need independent safety testing before scaling.","options":["Although","Despite","However"],"correctAnswer":"However","postGapToken":", we need (Inicio de oración tras punto + coma)","postGapType":"clause_verb","trapWarning":"Usar \"Although\" seguido de coma aislada al inicio de segunda oración.","explanation":"Punto seguido + conector + coma = \"However\"."},{"id":"d6-q8","prompt":"In ______ of his busy schedule, the director attended every training session.","options":["although","spite","despite"],"correctAnswer":"spite","postGapToken":"of his busy schedule","postGapType":"noun_gerund","trapWarning":"Elegir \"despite\" dejando \"In despite of\" (error grave).","explanation":"La locución fija es \"In spite of\" (3 palabras) o \"Despite\" (1 palabra)."}],"fallback":{"title":"Fallback Sintáctico: Detector de Palabra Post-Hueco","triggerCondition":"Si fallas al distinguir despite vs. although o superas los 45 segundos.","summary":"Aplica este escáner mecánico de 3 segundos sin leer el resto de la frase: mira exclusivamente lo que sigue al hueco.","items":[{"label":"Hueco + [the noun / -ing]","category":"DESPITE / IN SPITE OF","detail":"Tacha Although y However inmediatamente."},{"label":"Hueco + [Sujeto + Verbo]","category":"ALTHOUGH / EVEN THOUGH","detail":"Tacha Despite e In spite of inmediatamente."},{"label":"[ ; o . ] + Hueco + [ , ]","category":"HOWEVER","detail":"La puntuación fuerte + coma delata a However al instante."},{"label":"DESPITE OF","category":"SIEMPRE FALSO","detail":"Descártala en 0.5 segundos; esa combinación no existe."}]},"reversion":{"title":"Protocolo de Reversión: Sustantivo vs. Verbo Conjugado","triggerCondition":"Si el análisis post-hueco falla por no reconocer si hay verbo conjugado.","summary":"Entrena el ojo para distinguir en 2 segundos un bloque nominal (sin tiempo verbal) de una cláusula con verbo flexionado.","items":[{"id":"d6-rev-1","prompt":"Clasifica: \"the heavy traffic on Monday\"","options":["Sustantivo / Bloque nominal","Cláusula con verbo conjugado"],"correct":"Sustantivo / Bloque nominal","rule":"No hay verbo -\u003e usaría Despite."},{"id":"d6-rev-2","prompt":"Clasifica: \"the traffic was terrible\"","options":["Sustantivo / Bloque nominal","Cláusula con verbo conjugado"],"correct":"Cláusula con verbo conjugado","rule":"Contiene verbo \"was\" -\u003e usaría Although."},{"id":"d6-rev-3","prompt":"Clasifica: \"having little experience\"","options":["Gerundio (-ing) / Nominal","Cláusula con verbo conjugado"],"correct":"Gerundio (-ing) / Nominal","rule":"Gerundio sin sujeto/auxiliar -\u003e usaría Despite."},{"id":"d6-rev-4","prompt":"Clasifica: \"she has little experience\"","options":["Sustantivo / Bloque nominal","Cláusula con verbo conjugado"],"correct":"Cláusula con verbo conjugado","rule":"Sujeto \"she\" + verbo \"has\" -\u003e usaría Although."}]}}],"skimming":[{"id":"skim-1","title":"Pasaje A: Política de Trabajo Híbrido","topic":"Lectura Panorámica B1 (15s)","tokens":[{"text":"Although","role":"contrast"},{"text":"many executives","role":"subject"},{"text":"initially","role":"normal"},{"text":"questioned","role":"verb"},{"text":"remote productivity,","role":"normal"},{"text":"recent quarterly audits","role":"subject"},{"text":"demonstrate","role":"verb"},{"text":"that hybrid teams","role":"subject"},{"text":"deliver","role":"verb"},{"text":"projects 12% faster.","role":"normal"},{"text":"However,","role":"contrast"},{"text":"junior analysts","role":"subject"},{"text":"still","role":"normal"},{"text":"require","role":"verb"},{"text":"on-site mentoring.","role":"normal"}],"summaryCheck":{"question":"Sin traducir todo el texto, ¿cuál es el giro principal tras el marcador de contraste?","options":["Los ejecutivos prohibieron el trabajo remoto.","Los equipos híbridos entregan más rápido, aunque los analistas junior necesitan mentoría presencial.","La productividad cayó un 12% por falta de auditorías."],"correct":"Los equipos híbridos entregan más rápido, aunque los analistas junior necesitan mentoría presencial."}},{"id":"skim-2","title":"Pasaje B: Transición Energética Industrial","topic":"Lectura Panorámica B1 (15s)","tokens":[{"text":"Despite","role":"contrast"},{"text":"high installation costs,","role":"normal"},{"text":"regional factories","role":"subject"},{"text":"have adopted","role":"verb"},{"text":"solar microgrids","role":"normal"},{"text":"since 2022.","role":"normal"},{"text":"In spite of","role":"contrast"},{"text":"initial skepticism,","role":"normal"},{"text":"these plants","role":"subject"},{"text":"now","role":"normal"},{"text":"save","role":"verb"},{"text":"thousands monthly.","role":"normal"}],"summaryCheck":{"question":"Según los sujetos, verbos y conectores de contraste, ¿qué hicieron las fábricas?","options":["Rechazaron los paneles solares por su alto costo.","Adoptaron microrredes solares desde 2022 y ahora ahorran dinero.","Cerraron en 2022 por escepticismo técnico."],"correct":"Adoptaron microrredes solares desde 2022 y ahora ahorran dinero."}}],"risks":[{"id":"risk-listening","title":"Acondicionamiento Auditivo en Tiempo Real (Días 7–8)","severity":"Crítico","description":"Dominar los Días 1 al 6 blinda tu arquitectura gramatical, pero EnglishScore evalúa Listening con acentos británicos, australianos e indios en audio de una sola reproducción sin subtítulos.","action":"Practica dictado rápido y shadowing de 15 minutos diarios antes de presentar el examen real."},{"id":"risk-biometric","title":"Vigilancia Biométrica y Protocolo de Cámara (Días 9–10)","severity":"Eliminatorio","description":"La aplicación monitorea el seguimiento ocular y el entorno con la cámara frontal. Desviar la mirada repetidamente para pensar o leer notas fuera de pantalla invalida automáticamente el certificado.","action":"Simula toda la prueba mirando al centro de la pantalla, en habitación iluminada y sin ruido de fondo."},{"id":"risk-stress","title":"Colapso Nervioso bajo el Límite de 45 Segundos","severity":"Alto","description":"El estrés en los primeros 5 ítems degrada la precisión y provoca que el algoritmo te envíe a la ruta Breakthrough (A1/A2), haciendo matemáticamente imposible superar los 300 puntos.","action":"Si detectas bloqueo \u003e30s, aplica descarte gramatical inmediato (Día 6) y protege el ritmo."}]};
+    const STORAGE_KEY = 'englishscore_b1_html_v1';
+
+    let state = {
+      section: 'trainer',
+      dayId: 1,
+      stage: 'execution',
+      results: {},
+      // Verification session state
+      vStarted: false,
+      vFinished: false,
+      vIndex: 0,
+      vFeedback: null,
+      vItemSec: 0,
+      vTotalSec: 0,
+      vRecords: [],
+      vShowScanner: false,
+      vTimerId: null,
+      // Fallback interactive states
+      timelineYear: 2020,
+      certaintyPct: 99,
+      // Reversion answers
+      revAnswers: {},
+      // Skimming state
+      skimIdx: 0,
+      skimRunning: false,
+      skimSec: 15,
+      skimPicked: [],
+      skimSummaryPick: null,
+      skimTimerId: null,
+      // Risks checklist
+      riskChecked: {}
+    };
+
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) state.results = JSON.parse(saved);
+    } catch (e) {}
+
+    function saveResults() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state.results));
+      } catch (e) {}
+    }
+
+    function esc(s) {
+      return String(s || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function fmtClock(sec) {
+      const s = Math.max(0, sec);
+      return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
+    }
+
+    function stopTimers() {
+      if (state.vTimerId) { clearInterval(state.vTimerId); state.vTimerId = null; }
+      if (state.skimTimerId) { clearInterval(state.skimTimerId); state.skimTimerId = null; }
+    }
+
+    function setSection(sec) {
+      stopTimers();
+      state.section = sec;
+      state.vStarted = false;
+      state.skimRunning = false;
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      const activeBtn = document.getElementById('nav-' + sec);
+      if (activeBtn) activeBtn.classList.add('active');
+      render();
+    }
+
+    function selectDay(id) {
+      stopTimers();
+      state.dayId = id;
+      state.stage = 'execution';
+      resetVerificationState();
+      state.revAnswers = {};
+      render();
+    }
+
+    function selectStage(st) {
+      stopTimers();
+      state.stage = st;
+      if (st !== 'verification') state.vStarted = false;
+      render();
+    }
+
+    function resetVerificationState() {
+      state.vStarted = false;
+      state.vFinished = false;
+      state.vIndex = 0;
+      state.vFeedback = null;
+      state.vItemSec = 0;
+      state.vTotalSec = 0;
+      state.vRecords = [];
+      state.vShowScanner = false;
+    }
+
+    function startVerification() {
+      stopTimers();
+      resetVerificationState();
+      state.vStarted = true;
+      const day = COURSE.days.find(d => d.id === state.dayId);
+      state.vTimerId = setInterval(() => {
+        if (!state.vStarted || state.vFinished) return;
+        state.vTotalSec += 1;
+        state.vItemSec += 1;
+
+        if (day.totalExamTimeLimitSec && state.vTotalSec >= day.totalExamTimeLimitSec) {
+          const rem = day.questions.slice(state.vIndex).map(q => ({
+            questionId: q.id, isCorrect: false, seconds: state.vItemSec, timedOut: true
+          }));
+          finishVerification(state.vRecords.concat(rem));
+          return;
+        }
+        if (day.questionTimeLimitSec && state.vItemSec >= day.questionTimeLimitSec && !state.vFeedback) {
+          const q = day.questions[state.vIndex];
+          state.vFeedback = {
+            isCorrect: false,
+            message: 'Tiempo agotado (' + day.questionTimeLimitSec + 's). Correcta: "' + q.correctAnswer + '".',
+            trap: q.explanation
+          };
+          state.vRecords.push({ questionId: q.id, isCorrect: false, seconds: day.questionTimeLimitSec, timedOut: true });
+        }
+        updateTimerDom(day);
+      }, 1000);
+      render();
+    }
+
+    function updateTimerDom(day) {
+      const el = document.getElementById('v-timer-display');
+      if (!el) { render(); return; }
+      if (state.vFeedback) { render(); return; }
+      let txt = '';
+      let urgent = false;
+      if (day.questionTimeLimitSec) {
+        const rem = Math.max(0, day.questionTimeLimitSec - state.vItemSec);
+        txt = 'Ítem: ' + fmtClock(rem) + ' | Total: ' + fmtClock(state.vTotalSec);
+        urgent = rem <= 7;
+      } else if (day.totalExamTimeLimitSec) {
+        const rem = Math.max(0, day.totalExamTimeLimitSec - state.vTotalSec);
+        txt = 'Restante: ' + fmtClock(rem);
+        urgent = rem <= 60;
+      } else {
+        txt = 'Ítem: ' + fmtClock(state.vItemSec) + ' | Total: ' + fmtClock(state.vTotalSec);
+        urgent = state.vItemSec > 45;
+      }
+      el.textContent = txt;
+      el.className = 'timer' + (urgent ? ' urgent' : '');
+    }
+
+    function pickOption(opt) {
+      if (state.vFeedback) return;
+      const day = COURSE.days.find(d => d.id === state.dayId);
+      const q = day.questions[state.vIndex];
+      const ok = opt === q.correctAnswer;
+      state.vFeedback = {
+        isCorrect: ok,
+        picked: opt,
+        message: ok ? 'Correcto (' + state.vItemSec + 's). ' + q.explanation : 'Incorrecto. Elegiste "' + opt + '". Correcta: "' + q.correctAnswer + '".',
+        trap: ok ? '' : q.trapWarning
+      };
+      state.vRecords.push({ questionId: q.id, isCorrect: ok, seconds: state.vItemSec, timedOut: false });
+      render();
+    }
+
+    function submitTranslation(e) {
+      e.preventDefault();
+      if (state.vFeedback) return;
+      const inp = document.getElementById('tr-input');
+      if (!inp || !inp.value.trim()) return;
+      const day = COURSE.days.find(d => d.id === state.dayId);
+      const q = day.questions[state.vIndex];
+      const norm = inp.value.toLowerCase().trim().replace(/[.!?]+$/g, '').replace(/\s+/g, ' ');
+      const accepted = q.acceptedAnswers || [q.correctAnswer.toLowerCase().replace(/[.!?]+$/g, '')];
+      const ok = accepted.includes(norm);
+      const l1 = /^i live\b|^she works\b|^we know\b|^i don't send\b|^i do not send\b|^they finish to\b|^he already finishes\b|^i have this laptop\b|^we don't see\b|^did you ever\b|^i study english\b/.test(norm);
+      state.vFeedback = {
+        isCorrect: ok,
+        message: ok ? 'Correcto (' + state.vItemSec + 's). ' + q.explanation : (l1 ? 'Bloqueo L1: usaste Presente Simple o calco español. ' : '') + 'Esperada: "' + q.correctAnswer + '".',
+        trap: ok ? '' : q.trapWarning
+      };
+      state.vRecords.push({ questionId: q.id, isCorrect: ok, seconds: state.vItemSec, timedOut: false });
+      render();
+    }
+
+    function nextQuestion() {
+      const day = COURSE.days.find(d => d.id === state.dayId);
+      if (state.vIndex + 1 >= day.questions.length) {
+        finishVerification(state.vRecords);
+        return;
+      }
+      state.vIndex += 1;
+      state.vFeedback = null;
+      state.vItemSec = 0;
+      state.vShowScanner = false;
+      render();
+    }
+
+    function finishVerification(records) {
+      stopTimers();
+      state.vFinished = true;
+      const day = COURSE.days.find(d => d.id === state.dayId);
+      const correctCount = records.filter(r => r.isCorrect).length;
+      const totalCount = day.questions.length;
+      const accuracy = Math.round((correctCount / totalCount) * 100);
+      const avgSec = records.length ? Math.round((records.reduce((a, r) => a + r.seconds, 0) / records.length) * 10) / 10 : 0;
+      const maxSec = records.reduce((m, r) => Math.max(m, r.seconds), 0);
+      const timedOutCount = records.filter(r => r.timedOut).length;
+      const rupture = (day.id === 5 || day.id === 6) && (avgSec > 45 || maxSec > 45 || timedOutCount > 0);
+      state.results[day.id] = { accuracy, correctCount, totalCount, avgSec, maxSec, rupture };
+      saveResults();
+      render();
+    }
+
+    function startSkimming() {
+      stopTimers();
+      state.skimPicked = [];
+      state.skimSummaryPick = null;
+      state.skimSec = 15;
+      state.skimRunning = true;
+      state.skimTimerId = setInterval(() => {
+        state.skimSec = Math.max(0, state.skimSec - 1);
+        if (state.skimSec === 0) {
+          state.skimRunning = false;
+          stopTimers();
+          render();
+        } else {
+          const el = document.getElementById('skim-clock');
+          if (el) el.textContent = '00:' + String(state.skimSec).padStart(2, '0');
+        }
+      }, 1000);
+      render();
+    }
+
+    function toggleSkimToken(idx) {
+      if (!state.skimRunning && state.skimSec === 15) return;
+      if (state.skimPicked.includes(idx)) state.skimPicked = state.skimPicked.filter(i => i !== idx);
+      else state.skimPicked.push(idx);
+      render();
+    }
+
+    function render() {
+      const root = document.getElementById('app');
+      if (state.section === 'trainer') {
+        const day = COURSE.days.find(d => d.id === state.dayId);
+        const dayStrip = COURSE.days.map(d => {
+          const r = state.results[d.id];
+          const label = r ? d.shortTitle + ' (' + r.accuracy + '%)' : d.shortTitle;
+          return '<button class="nav-btn ' + (d.id === day.id ? 'active' : '') + '" onclick="selectDay(' + d.id + ')">' + esc(label) + '</button>';
+        }).join('');
+
+        const tabs = [
+          { id: 'execution', label: '1. Ejecución' },
+          { id: 'verification', label: '2. Verificación (' + day.questions.length + ')' },
+          { id: 'fallback', label: '3. Fallback' },
+          { id: 'reversion', label: '4. Reversión' }
+        ].map(t => '<button class="stage-btn ' + (state.stage === t.id ? 'active' : '') + '" onclick="selectStage(\'' + t.id + '\')">' + esc(t.label) + '</button>').join('');
+
+        let stageHtml = '';
+        if (state.stage === 'execution') {
+          const rules = day.execution.rules.map(r =>
+            '<div class="rule-box"><strong>' + esc(r.title) + '</strong><code class="formula">' + esc(r.formula) + '</code><div style="font-size:13px;color:#475569">' + esc(r.note) + '</div></div>'
+          ).join('');
+          const rows = day.execution.l1TrapExamples.map(ex =>
+            '<tr><td class="bad">' + esc(ex.wrong) + '</td><td class="good">' + esc(ex.right) + '</td><td>' + esc(ex.reason) + '</td></tr>'
+          ).join('');
+          stageHtml =
+            '<div class="card">' +
+              '<div class="kicker">' + esc(day.shortTitle) + ' · ' + esc(day.timeLimitLabel) + '</div>' +
+              '<h2>' + esc(day.title) + '</h2>' +
+              '<p>' + esc(day.objective) + '</p>' +
+              '<div class="rule-box"><strong>Criterio de Ingeniería Inversa</strong><p style="margin:6px 0 0">' + esc(day.execution.principle) + '</p></div>' +
+              '<h3>Reglas Operativas</h3>' + rules +
+              '<h3>Contraste Anti-Interferencia (Español L1 vs. EnglishScore B1)</h3>' +
+              '<table><thead><tr><th>Trampa L1</th><th>Forma Correcta B1</th><th>Explicación</th></tr></thead><tbody>' + rows + '</tbody></table>' +
+              '<div style="margin-top:16px"><button class="btn-primary" onclick="selectStage(\'verification\')">Iniciar Verificación →</button></div>' +
+            '</div>';
+        } else if (state.stage === 'verification') {
+          if (!state.vStarted) {
+            stageHtml =
+              '<div class="card">' +
+                '<div class="kicker">' + esc(day.shortTitle) + ' · Simulador Cronometrado</div>' +
+                '<h2>Verificación (' + day.questions.length + ' ítems · Meta ' + day.targetAccuracy + '%)</h2>' +
+                '<p>' + esc(day.verificationInstructions) + '</p>' +
+                '<button class="btn-primary" onclick="startVerification()">Comenzar Verificación →</button>' +
+              '</div>';
+          } else if (state.vFinished) {
+            const res = state.results[day.id];
+            const passed = res.accuracy >= day.targetAccuracy && !res.rupture;
+            stageHtml =
+              '<div class="card">' +
+                '<div class="kicker">Resultado · ' + esc(day.shortTitle) + '</div>' +
+                '<h2>' + (passed ? 'Objetivo superado (Ruta Threshold B1)' : 'Requiere ajuste (Fallback / Reversión)') + '</h2>' +
+                '<div class="grid-3">' +
+                  '<div class="rule-box"><div class="kicker">Precisión</div><strong style="font-size:20px">' + res.accuracy + '% (' + res.correctCount + '/' + res.totalCount + ')</strong></div>' +
+                  '<div class="rule-box"><div class="kicker">Promedio / ítem</div><strong style="font-size:20px">' + res.avgSec + 's</strong></div>' +
+                  '<div class="rule-box"><div class="kicker">Pico máximo</div><strong style="font-size:20px">' + res.maxSec + 's</strong></div>' +
+                '</div>' +
+                (res.rupture ? '<div class="warn-box"><strong>Señal de ruptura (&gt;45s):</strong> Migra temporalmente al Modo Skimming de 15 segundos. <div style="margin-top:8px"><button class="btn-secondary" onclick="setSection(\'skimming\')">Ir a Modo Skimming</button></div></div>' : '') +
+                (!passed ? '<div class="warn-box"><strong>Recomendación:</strong> Activa el Fallback o el Protocolo de Reversión antes de reintentar.<div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn-secondary" onclick="selectStage(\'fallback\')">Abrir Fallback</button><button class="btn-secondary" onclick="selectStage(\'reversion\')">Ejecutar Reversión</button></div></div>' : '') +
+                '<div style="margin-top:16px"><button class="btn-primary" onclick="startVerification()">Reintentar batería</button></div>' +
+              '</div>';
+          } else {
+            const q = day.questions[state.vIndex];
+            const pct = Math.round(((state.vIndex + (state.vFeedback ? 1 : 0)) / day.questions.length) * 100);
+            let inputsHtml = '';
+            if (q.options) {
+              inputsHtml = '<div class="grid-3" style="margin-top:16px">' + q.options.map((opt, idx) => {
+                let cls = 'opt-btn';
+                if (state.vFeedback) {
+                  if (opt === q.correctAnswer) cls += ' ok';
+                  else if (state.vFeedback.picked === opt && !state.vFeedback.isCorrect) cls += ' err';
+                }
+                const safeOpt = esc(opt).replace(/'/g, '&#39;');
+                return '<button class="' + cls + '" ' + (state.vFeedback ? 'disabled' : '') + ' onclick="pickOption(this.dataset.opt)" data-opt="' + safeOpt + '"><strong>' + ['A','B','C'][idx] + '.</strong> ' + esc(opt) + '</button>';
+              }).join('') + '</div>';
+            } else {
+              inputsHtml =
+                '<form onsubmit="submitTranslation(event)" style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap">' +
+                  '<input id="tr-input" type="text" placeholder="Escribe la frase en inglés (Present Perfect)..." ' + (state.vFeedback ? 'disabled' : '') + ' />' +
+                  '<button class="btn-primary" type="submit" ' + (state.vFeedback ? 'disabled' : '') + '>Validar frase</button>' +
+                '</form>';
+            }
+            const scannerHtml = (day.id === 6 && q.postGapToken)
+              ? '<div style="margin-top:10px"><button class="btn-secondary" onclick="state.vShowScanner=!state.vShowScanner;render()">' + (state.vShowScanner ? 'Ocultar escáner post-hueco' : 'Activar escáner post-hueco (Fallback)') + '</button>' +
+                (state.vShowScanner ? '<div class="rule-box">Token inmediato: <strong style="color:#1d4ed8">' + esc(q.postGapToken) + '</strong> → ' + (q.postGapType === 'noun_gerund' ? 'Bloque nominal/gerundio: tacha Although.' : 'Cláusula con verbo conjugado o puntuación fuerte: tacha Despite.') + '</div>' : '') + '</div>'
+              : '';
+
+            stageHtml =
+              '<div class="card">' +
+                '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">' +
+                  '<div class="kicker">Ítem ' + (state.vIndex + 1) + ' de ' + day.questions.length + '</div>' +
+                  '<div id="v-timer-display" class="timer">Tiempo activo</div>' +
+                '</div>' +
+                '<div class="progress-bar"><div class="progress-fill" style="width:' + pct + '%"></div></div>' +
+                '<div style="font-size:18px;font-weight:600">' + esc(q.prompt) + '</div>' +
+                scannerHtml +
+                inputsHtml +
+                (state.vFeedback ? '<div class="feedback ' + (state.vFeedback.isCorrect ? 'ok' : 'err') + '"><strong>' + esc(state.vFeedback.message) + '</strong>' + (state.vFeedback.trap ? '<div style="margin-top:4px;font-size:13px">' + esc(state.vFeedback.trap) + '</div>' : '') + '<div style="margin-top:10px"><button class="btn-primary" onclick="nextQuestion()">' + (state.vIndex + 1 >= day.questions.length ? 'Ver diagnóstico' : 'Siguiente ítem →') + '</button></div></div>' : '') +
+              '</div>';
+          }
+        } else if (state.stage === 'fallback') {
+          let extraTool = '';
+          if (day.id === 2) {
+            extraTool = '<div class="rule-box"><strong>Línea Temporal: Inicio ' + state.timelineYear + ' → 2026 (AHORA)</strong><input type="range" min="2015" max="2025" value="' + state.timelineYear + '" oninput="state.timelineYear=Number(this.value);render()" style="width:100%;margin:8px 0" /><div>SINCE: <code>I have lived here since ' + state.timelineYear + '.</code> · FOR: <code>I have lived here for ' + (2026 - state.timelineYear) + ' years.</code></div></div>';
+          } else if (day.id === 3) {
+            const modalTxt = state.certaintyPct >= 85 ? 'MUST (99% Afirmativo) / CAN’T (99% Negativo)' : (state.certaintyPct >= 35 ? 'MIGHT / MAY (50% Probable)' : 'CAN’T (Imposibilidad lógica)');
+            extraTool = '<div class="rule-box"><strong>Termómetro de Certeza: ' + state.certaintyPct + '% → ' + modalTxt + '</strong><input type="range" min="0" max="100" value="' + state.certaintyPct + '" oninput="state.certaintyPct=Number(this.value);render()" style="width:100%;margin:8px 0" /></div>';
+          }
+          const items = day.fallback.items.map(f =>
+            '<div class="rule-box"><strong>' + esc(f.label) + '</strong> · <span style="color:#1d4ed8;font-weight:600">' + esc(f.category) + '</span><div style="font-size:13px;color:#475569;margin-top:4px">' + esc(f.detail) + '</div></div>'
+          ).join('');
+          stageHtml =
+            '<div class="card">' +
+              '<div class="kicker">Fallback · ' + esc(day.fallback.triggerCondition) + '</div>' +
+              '<h2>' + esc(day.fallback.title) + '</h2>' +
+              '<p>' + esc(day.fallback.summary) + '</p>' +
+              extraTool +
+              '<div class="grid-2">' + items + '</div>' +
+              '<div style="margin-top:16px"><button class="btn-primary" onclick="selectStage(\'verification\')">Volver a Verificación</button></div>' +
+            '</div>';
+        } else if (state.stage === 'reversion') {
+          const items = day.reversion.items.map((it, idx) => {
+            const picked = state.revAnswers[it.id];
+            const btns = it.options.map(opt => {
+              let cls = 'btn-secondary';
+              if (picked === opt) cls = opt === it.correct ? 'opt-btn ok' : 'opt-btn err';
+              return '<button style="width:auto;padding:8px 14px" class="' + cls + '" data-id="' + esc(it.id) + '" data-opt="' + esc(opt) + '" onclick="state.revAnswers[this.dataset.id]=this.dataset.opt;render()">' + esc(opt) + '</button>';
+            }).join(' ');
+            const fb = picked ? '<div style="margin-top:8px;font-size:13px;font-weight:600;color:' + (picked === it.correct ? '#047857' : '#b91c1c') + '">' + (picked === it.correct ? 'Correcto. ' : 'Correcta: ' + esc(it.correct) + '. ') + esc(it.rule) + '</div>' : '';
+            return '<div class="rule-box"><div><strong>' + (idx + 1) + '. ' + esc(it.prompt) + '</strong></div><div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">' + btns + '</div>' + fb + '</div>';
+          }).join('');
+          stageHtml =
+            '<div class="card">' +
+              '<div class="kicker">Reversión · ' + esc(day.reversion.triggerCondition) + '</div>' +
+              '<h2>' + esc(day.reversion.title) + '</h2>' +
+              '<p>' + esc(day.reversion.summary) + '</p>' +
+              items +
+              '<div style="margin-top:16px;display:flex;gap:8px"><button class="btn-secondary" onclick="state.revAnswers={};render()">Reiniciar micro-drill</button><button class="btn-primary" onclick="selectStage(\'verification\')">Reintentar Verificación</button></div>' +
+            '</div>';
+        }
+
+        root.innerHTML =
+          '<div class="day-strip">' + dayStrip + '</div>' +
+          '<div class="stage-tabs">' + tabs + '</div>' +
+          stageHtml;
+
+        if (state.stage === 'verification' && state.vStarted && !state.vFinished) {
+          updateTimerDom(day);
+        }
+      } else if (state.section === 'skimming') {
+        const p = COURSE.skimming[state.skimIdx];
+        const pBtns = COURSE.skimming.map((item, idx) =>
+          '<button class="nav-btn ' + (idx === state.skimIdx ? 'active' : '') + '" onclick="stopTimers();state.skimIdx=' + idx + ';state.skimRunning=false;state.skimSec=15;state.skimPicked=[];state.skimSummaryPick=null;render()">' + esc(item.title) + '</button>'
+        ).join('');
+        const tokensHtml = p.tokens.map((t, idx) => {
+          const picked = state.skimPicked.includes(idx);
+          let cls = 'token';
+          if (picked) {
+            cls += t.role === 'normal' ? ' wrong' : ' ' + t.role;
+          }
+          return '<button class="' + cls + '" onclick="toggleSkimToken(' + idx + ')">' + esc(t.text) + '</button>';
+        }).join('');
+        const targetCount = p.tokens.filter(t => t.role !== 'normal').length;
+        const hits = state.skimPicked.filter(i => p.tokens[i].role !== 'normal').length;
+        const sumOpts = p.summaryCheck.options.map(opt => {
+          let cls = 'opt-btn';
+          if (state.skimSummaryPick) {
+            if (opt === p.summaryCheck.correct) cls += ' ok';
+            else if (state.skimSummaryPick === opt) cls += ' err';
+          }
+          return '<button class="' + cls + '" style="margin-top:8px" data-opt="' + esc(opt) + '" onclick="state.skimSummaryPick=this.dataset.opt;render()">' + esc(opt) + '</button>';
+        }).join('');
+
+        root.innerHTML =
+          '<div class="card">' +
+            '<div class="kicker">Prospectiva · Señal de ruptura y migración</div>' +
+            '<h2>Entrenador de Skimming (15 segundos)</h2>' +
+            '<p>Si inviertes más de 45s por ítem en los Días 5 y 6 o caes en keyword traps, migra temporalmente a este régimen: identifica solo <strong>Sujetos</strong> (azul), <strong>Verbos</strong> (verde) y <strong>Marcadores de Contraste</strong> (ámbar) en 15 segundos.</p>' +
+            '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin:14px 0">' +
+              '<div style="display:flex;gap:8px;flex-wrap:wrap">' + pBtns + '</div>' +
+              '<div style="display:flex;align-items:center;gap:12px"><span id="skim-clock" class="timer">00:' + String(state.skimSec).padStart(2, '0') + '</span><button class="btn-primary" onclick="startSkimming()">Iniciar 15s</button></div>' +
+            '</div>' +
+            '<div class="token-wrap">' + tokensHtml + '</div>' +
+            '<div class="kicker">Nodos estructurales capturados: ' + hits + ' / ' + targetCount + '</div>' +
+            '<hr style="border:none;border-top:1px solid #e2e8f0;margin:18px 0" />' +
+            '<h3>' + esc(p.summaryCheck.question) + '</h3>' +
+            sumOpts +
+          '</div>';
+      } else if (state.section === 'risks') {
+        const risksHtml = COURSE.risks.map(r =>
+          '<div class="rule-box"><div class="kicker">Riesgo ' + esc(r.severity) + '</div><strong>' + esc(r.title) + '</strong><p style="margin:6px 0">' + esc(r.description) + '</p><div style="font-size:13px;font-weight:600">Mitigación: ' + esc(r.action) + '</div></div>'
+        ).join('');
+        const checks = [
+          'Iluminación frontal uniforme para seguimiento biométrico.',
+          'Mirada fija al centro de la pantalla (no desviar los ojos fuera del monitor).',
+          'Auriculares o silencio total para acentos UK / AU / IN en única reproducción.',
+          'Control respiratorio en los primeros 5 ítems para asegurar ruta Threshold.',
+          'Corte de decisión a los 30s usando descarte gramatical antes del límite de 45s.'
+        ];
+        const checkHtml = checks.map((c, idx) => {
+          const on = Boolean(state.riskChecked[idx]);
+          return '<div class="check-row" onclick="state.riskChecked[' + idx + ']=!state.riskChecked[' + idx + '];render()"><input type="checkbox" ' + (on ? 'checked' : '') + ' style="pointer-events:none;margin-top:4px" /><span style="' + (on ? 'text-decoration:line-through;color:#64748b' : '') + '">' + esc(c) + '</span></div>';
+        }).join('');
+        root.innerHTML =
+          '<div class="card">' +
+            '<div class="kicker">Riesgos Residuales Declarados · Días 7 al 10</div>' +
+            '<h2>Ilusión de Competencia Teórica y Protocolo Biométrico</h2>' +
+            '<div class="grid-3">' + risksHtml + '</div>' +
+          '</div>' +
+          '<div class="card">' +
+            '<h3>Lista de Verificación Pre-Examen</h3>' +
+            checkHtml +
+          '</div>';
+      }
+    }
+
+    render();
+  </script>
+</body>
+</html>

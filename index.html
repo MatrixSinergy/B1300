@@ -1,0 +1,828 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EnglishScore B1 — Curso Interactivo Offline (Días 1 al 6)</title>
+  <style>
+    :root { color-scheme: light; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #faf7f2;
+      color: #1c1917;
+      line-height: 1.58;
+    }
+    header {
+      background: #fffdf9;
+      border-bottom: 1px solid #e4dec9;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+    .header-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: #1c1917;
+      letter-spacing: -0.015em;
+    }
+    .top-nav { display: flex; flex-wrap: wrap; gap: 8px; }
+    .nav-btn {
+      border: 1px solid #e4dec9;
+      background: #f3efe6;
+      color: #44403c;
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .nav-btn.active { background: #1e3a8a; color: #ffffff; border-color: #1e3a8a; }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 24px 20px 60px; }
+    .card {
+      background: #fffdf9;
+      border: 1px solid #e4dec9;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+    .kicker { font-size: 12px; color: #57534e; font-weight: 600; }
+    h1, h2, h3 {
+      font-family: Georgia, "Times New Roman", serif;
+      margin: 6px 0 10px;
+      color: #1c1917;
+      letter-spacing: -0.015em;
+    }
+    h2 { font-size: 22px; }
+    h3 { font-size: 16px; }
+    .day-strip { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+    .stage-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      background: #eae3d3;
+      padding: 4px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+    }
+    .stage-btn {
+      flex: 1;
+      min-width: 130px;
+      border: none;
+      background: transparent;
+      padding: 9px 12px;
+      border-radius: 7px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #57534e;
+      cursor: pointer;
+    }
+    .stage-btn.active { background: #fffdf9; color: #1c1917; box-shadow: 0 1px 2px rgba(28,25,23,0.06); }
+    .btn-primary {
+      background: #1e3a8a;
+      color: #ffffff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-primary:hover { background: #172554; }
+    .btn-secondary {
+      background: #fffdf9;
+      color: #1c1917;
+      border: 1px solid #d6ceb8;
+      padding: 9px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 14px; }
+    th, td { border: 1px solid #e4dec9; padding: 10px 12px; text-align: left; }
+    th { background: #f3efe6; font-size: 12px; color: #57534e; }
+    .bad { color: #9f1239; font-weight: 500; }
+    .good { color: #065f46; font-weight: 600; }
+    .rule-box {
+      background: #faf7f2;
+      border: 1px solid #e4dec9;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin: 10px 0;
+    }
+    .formula {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 13px;
+      color: #1e3a8a;
+      background: #fffdf9;
+      border: 1px solid #e4dec9;
+      padding: 8px 10px;
+      border-radius: 6px;
+      margin: 6px 0;
+      display: block;
+    }
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+    .opt-btn {
+      width: 100%;
+      text-align: left;
+      padding: 14px;
+      border: 1px solid #d6ceb8;
+      background: #fffdf9;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .opt-btn:hover:not(:disabled) { border-color: #1e3a8a; background: #f3efe6; }
+    .opt-btn.ok { border-color: #065f46; background: #ecfdf5; color: #064e3b; }
+    .opt-btn.err { border-color: #9f1239; background: #fff1f2; color: #881337; }
+    .timer {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-weight: 700;
+      font-size: 15px;
+      font-variant-numeric: tabular-nums;
+    }
+    .urgent { color: #9f1239; }
+    .feedback {
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid;
+      font-size: 14px;
+    }
+    .feedback.ok { background: #ecfdf5; border-color: #a7f3d0; color: #064e3b; }
+    .feedback.err { background: #fff1f2; border-color: #fecdd3; color: #881337; }
+    .warn-box { background: #fffbeb; border: 1px solid #fde68a; color: #78350f; padding: 14px; border-radius: 8px; margin-top: 14px; }
+    .token-wrap { display: flex; flex-wrap: wrap; gap: 8px; padding: 16px; background: #faf7f2; border: 1px solid #e4dec9; border-radius: 8px; margin: 14px 0; }
+    .token {
+      padding: 6px 10px;
+      border: 1px solid #d6ceb8;
+      background: #fffdf9;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .token.subject { background: #dbeafe; border-color: #1e3a8a; color: #1e3a8a; font-weight: 600; }
+    .token.verb { background: #d1fae5; border-color: #065f46; color: #064e3b; font-weight: 600; }
+    .token.contrast { background: #fef3c7; border-color: #d97706; color: #78350f; font-weight: 600; }
+    .token.wrong { background: #ffe4e6; border-color: #9f1239; color: #881337; text-decoration: line-through; }
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d6ceb8;
+      background: #fffdf9;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+    .progress-bar { height: 6px; background: #eae3d3; border-radius: 99px; overflow: hidden; margin: 12px 0 18px; }
+    .progress-fill { height: 100%; background: #1e3a8a; transition: width 0.2s; }
+    .check-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid #ece7d8;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="brand">EnglishScore B1 — Edición Oxford Paper</div>
+      <div class="top-nav">
+        <button class="nav-btn active" id="nav-trainer" onclick="setSection('trainer')">Entrenador (Días 1–6)</button>
+        <button class="nav-btn" id="nav-skimming" onclick="setSection('skimming')">Modo Skimming (15s)</button>
+        <button class="nav-btn" id="nav-risks" onclick="setSection('risks')">Riesgos Días 7–10</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap" id="app"></main>
+
+  <script>
+    const COURSE = {"days":[{"id":1,"shortTitle":"Día 1","title":"Desfosilización L1: Sujetos y Posesión","objective":"Erradicar el calco del verbo \"tener\" (have) para edad y sensaciones físicas, e internalizar la pluralidad obligatoria de \"people\" bajo estándares Cambridge B1.","timeLimitLabel":"Límite total 10:00 · Meta 100%","questionTimeLimitSec":null,"totalExamTimeLimitSec":600,"targetAccuracy":100,"execution":{"principle":"Según los descriptores de Cambridge English (CEFR A2→B1) y el filtro adaptativo de EnglishScore, la transferencia directa del español (L1) en edad, estados físicos, sujetos vacíos y concordancia de sustantivos colectivos penaliza el perfil gramatical al nivel A2. En inglés, edad y sensaciones son atributos del sujeto (verbo copulativo TO BE =), nunca posesión (HAVE).","l1TrapExamples":[{"wrong":"I have 25 years old.","right":"I am 25 years old.","reason":"Cambridge Grammar B1: \"have\" solo expresa posesión. La edad es un atributo copulativo con \"to be\"."},{"wrong":"She has very hungry after work.","right":"She is very hungry after work.","reason":"En inglés, \"hungry, thirsty, cold, hot, sleepy, afraid\" son adjetivos predicativos, no sustantivos poseídos."},{"wrong":"The people in my office is very friendly.","right":"The people in my office are very friendly.","reason":"\"People\" es un plural irregular invariable (sin -s) que exige concordancia plural (are / were / have)."},{"wrong":"Is very cold today in Bogotá.","right":"It is very cold today in Bogotá.","reason":"El inglés no admite sujetos nulos (pro-drop). Clima, hora y cláusulas impersonales exigen sujeto formal \"It\" o \"There\"."}],"rules":[{"title":"Atributos Copulativos: Edad y Sensaciones (TO BE)","formula":"Sujeto + am / is / are + [edad | hungry | thirsty | cold | hot | sleepy | afraid | right | lucky]","note":"Criterio Cambridge: si en español usas \"tener + sustantivo\", en inglés se expresa como \"be + adjetivo\"."},{"title":"Concordancia de Colectivos vs. Pronombres Indefinidos","formula":"People / Police + ARE / WERE / HAVE (Plural)  |  Everyone / Everybody / Someone + IS / WAS / HAS (Singular)","note":"Trampa frecuente en Cambridge B1 Preliminary: \"everyone\" significa todos, pero toma verbo en 3.ª persona singular."},{"title":"Sujeto Formal Obligatorio (Dummy \"It\" vs. Existencial \"There\")","formula":"IT + is / was + [adjetivo / clima / distancia]  |  THERE + is / are + [sustantivo que existe]","note":"Nunca inicies una oración declarativa directamente con \"Is...\" sin sujeto gramatical."}]},"verificationMode":"gap-fill-mc","verificationInstructions":"Batería de 20 oraciones trampa calibrada al estándar Cambridge A2/B1. Completa cada hueco evitando la interferencia del español. Meta: 20/20 en menos de 10 minutos.","questions":[{"id":"d1-q1","prompt":"My younger brother ______ 19 years old next month.","options":["has","is","have"],"correctAnswer":"is","trapWarning":"Trampa L1: traducir \"tiene 19 años\" induce a marcar \"has\".","explanation":"Regla Cambridge B1: la edad es un estado atributivo del sujeto, por lo que exige el verbo copulativo \"to be\" (is), nunca \"have/has\".","optionErrors":{"has":"\"has\" es un calco del español (\"tiene\"). En inglés, \"have\" indica posesión de objetos, nunca edad.","have":"\"have\" falla doblemente: primero porque la edad usa \"to be\", y segundo porque \"my younger brother\" es 3.ª persona singular."}},{"id":"d1-q2","prompt":"Please turn on the heater; I ______ freezing in this room.","options":["have","am","has"],"correctAnswer":"am","trapWarning":"Trampa L1: \"tengo mucho frío\" sugiere usar \"have\".","explanation":"Regla Cambridge B1: las sensaciones térmicas (\"cold, hot, freezing\") funcionan como adjetivos predicativos vinculados con \"to be\" (I am / I'm freezing).","optionErrors":{"have":"\"have\" no se combina con adjetivos de sensación física como \"freezing\". Se requiere \"am\".","has":"\"has\" no concuerda con el sujeto \"I\" ni es válido para estados térmicos."}},{"id":"d1-q3","prompt":"Most people in this city ______ by bus during the week.","options":["travels","travel","is traveling"],"correctAnswer":"travel","trapWarning":"Trampa L1: \"la gente viaja\" (singular en español) induce a usar \"-s\" o \"is\".","explanation":"Regla Cambridge B1: \"people\" es un sustantivo plural irregular (equivalente a \"persons\"). En Presente Simple toma la forma base sin \"-s\" (\"travel\").","optionErrors":{"travels":"Añadir \"-s\" (\"travels\") trata a \"people\" como singular por influencia de \"la gente\" en español.","is traveling":"El auxiliar singular \"is\" es incompatible con el sujeto plural \"people\" (debería ser \"are traveling\")."}},{"id":"d1-q4","prompt":"______ very important to check your grammar before submitting.","options":["Is","It is","There is"],"correctAnswer":"It is","trapWarning":"Trampa L1: omisión del sujeto (\"Es muy importante\").","explanation":"Regla Cambridge B1 (Dummy Subject): el inglés no permite oraciones declarativas sin sujeto. Antes de un adjetivo + infinitivo (\"important to check\") se exige \"It is\".","optionErrors":{"Is":"Omitir el sujeto al inicio de una afirmación es agramatical en inglés (calco directo de \"Es muy importante\").","There is":"\"There is\" introduce la existencia de un sustantivo (\"There is a problem\"), no califica un adjetivo como \"important\"."}},{"id":"d1-q5","prompt":"We worked six hours without a break, so we ______ really hungry.","options":["have","are","had"],"correctAnswer":"are","trapWarning":"Trampa L1: \"tenemos hambre\".","explanation":"Regla Cambridge B1: \"hungry\" es un adjetivo de estado físico; al igual que \"thirsty\" o \"tired\", exige el verbo \"to be\" (are / were).","optionErrors":{"have":"En español se dice \"tener hambre\" (sustantivo), pero en inglés \"hungry\" es adjetivo y prohíbe \"have\".","had":"\"had\" también deriva del verbo \"have\" (posesión en pasado) y es incorrecto ante \"hungry\"."}},{"id":"d1-q6","prompt":"How old ______ your parents when they moved to Madrid?","options":["had","were","was"],"correctAnswer":"were","trapWarning":"Trampa L1: \"¿qué edad tenían?\" induce a usar \"had\".","explanation":"Regla Cambridge B1: las preguntas de edad en pasado (\"How old + be\") mantienen el verbo \"to be\" y concuerdan con \"your parents\" (plural → were).","optionErrors":{"had":"\"How old had...\" es un error grave de interferencia L1; \"How old\" siempre se construye con \"to be\".","was":"\"was\" es singular, pero el sujeto \"your parents\" es plural y exige \"were\"."}},{"id":"d1-q7","prompt":"The local police ______ investigating the missing equipment.","options":["is","are","has"],"correctAnswer":"are","trapWarning":"Trampa L1: \"la policía está investigando\" (singular en español).","explanation":"Regla Cambridge English Profile B1: \"the police\" es un sustantivo plural invariable (como \"people\") y exige verbo plural (\"are\").","optionErrors":{"is":"Aunque en español \"la policía\" es singular, en inglés \"police\" nunca lleva verbo singular \"is\".","has":"\"has\" es singular y además no forma Presente Continuo con \"-ing\" (\"investigating\")."}},{"id":"d1-q8","prompt":"You ______ completely right about the deadline change.","options":["have","are","is"],"correctAnswer":"are","trapWarning":"Trampa L1: \"tienes toda la razón\".","explanation":"Regla Cambridge B1: \"tener razón\" se expresa mediante el adjetivo \"right\" con el verbo \"to be\" (\"You are right\" / \"You're right\").","optionErrors":{"have":"\"You have right\" es incorrecto porque \"right\" aquí es adjetivo (\"correcto/acertado\"), no una posesión.","is":"\"is\" no concuerda con el pronombre \"You\", que siempre exige \"are\"."}},{"id":"d1-q9","prompt":"Do you want some water? You look like you ______ thirsty.","options":["have","are","do"],"correctAnswer":"are","trapWarning":"Trampa L1: \"tienes sed\".","explanation":"Regla Cambridge B1: \"thirsty\" (sediento) es adjetivo predicativo y requiere el verbo copulativo \"to be\" (\"are\").","optionErrors":{"have":"Calco de \"tener sed\". \"Thirsty\" no es un sustantivo que se pueda poseer.","do":"El auxiliar \"do\" no puede funcionar como verbo copulativo delante de un adjetivo."}},{"id":"d1-q10","prompt":"Many people ______ waiting outside the main auditorium right now.","options":["is","are","was"],"correctAnswer":"are","trapWarning":"Trampa L1: \"mucha gente está esperando\".","explanation":"Regla Cambridge B1: \"many people\" concuerda siempre en plural y \"right now\" indica presente continuo → \"are waiting\".","optionErrors":{"is":"\"is\" trata a \"people\" como sustantivo singular (\"mucha gente\"), lo cual es incorrecto en inglés.","was":"\"was\" es singular y además está en pasado, incompatible con \"right now\" y con \"people\"."}},{"id":"d1-q11","prompt":"I didn’t sleep well last night, so I ______ extremely sleepy.","options":["have","am","feel have"],"correctAnswer":"am","trapWarning":"Trampa L1: \"tengo sueño\".","explanation":"Regla Cambridge B1: \"sleepy\" es un adjetivo que describe estado físico/mental; se construye con \"to be\" (\"am\") o verbos de sensación como \"feel\" (sin \"have\").","optionErrors":{"have":"\"have sleepy\" es agramatical: \"have\" exige sustantivo, mientras \"sleepy\" es adjetivo.","feel have":"Combinar \"feel\" + \"have\" delante de un adjetivo es incorrecto; sería solo \"feel sleepy\" o \"am sleepy\"."}},{"id":"d1-q12","prompt":"______ a lot of traffic on the highway this morning.","options":["It is","There is","Are"],"correctAnswer":"There is","trapWarning":"Confusión entre existencia (\"hay\") y atribución (\"es\").","explanation":"Regla Cambridge B1: para expresar existencia (\"hay\") de un sustantivo incontable (\"traffic\") se usa \"There is\".","optionErrors":{"It is":"\"It is\" identifica o describe algo ya conocido, no introduce la existencia de algo en un lugar (\"hay\").","Are":"Falta el sujeto existencial \"There\" y además \"traffic\" es incontable (singular → is)."}},{"id":"d1-q13","prompt":"Everyone in the marketing department ______ ready for the audit.","options":["are","is","have"],"correctAnswer":"is","trapWarning":"Confusión semántica: \"everyone\" significa \"todos\", pero gramaticalmente es singular.","explanation":"Regla Cambridge B1: los pronombres indefinidos terminados en \"-one\" y \"-body\" (everyone, everybody, someone) exigen verbo en 3.ª persona singular (\"is\").","optionErrors":{"are":"Aunque \"everyone\" alude a varias personas, en gramática inglesa siempre rige verbo singular (\"is\").","have":"\"have\" es plural y tampoco sirve como cópula ante el adjetivo \"ready\"."}},{"id":"d1-q14","prompt":"Don’t open the window; the kids ______ afraid of the storm.","options":["have","are","is"],"correctAnswer":"are","trapWarning":"Trampa L1: \"los niños tienen miedo\".","explanation":"Regla Cambridge B1: \"tener miedo de\" corresponde a la estructura adjetival \"to be afraid of\" + sujeto plural (\"the kids are\").","optionErrors":{"have":"Error por traducción literal de \"tener miedo\". \"Afraid\" es adjetivo y exige \"to be\".","is":"\"is\" es singular, pero \"the kids\" es plural y exige \"are\"."}},{"id":"d1-q15","prompt":"My grandmother ______ 82, and she still walks three kilometers daily.","options":["has","is","have"],"correctAnswer":"is","trapWarning":"Trampa L1: \"tiene 82\".","explanation":"Regla Cambridge B1: incluso cuando se omite \"years old\", la edad sigue requiriendo \"to be\" (\"My grandmother is 82\").","optionErrors":{"has":"Incluso sin \"years old\", el número de edad no se \"posee\" con \"has\"; exige \"is\".","have":"\"have\" es incorrecto para edad y además no concuerda con \"my grandmother\" (singular)."}},{"id":"d1-q16","prompt":"Those people ______ never worked with international clients before.","options":["has","have","is"],"correctAnswer":"have","trapWarning":"Trampa L1: \"esa gente nunca ha trabajado\" (singular en español).","explanation":"Regla Cambridge B1: \"those people\" es demostrativo plural + sustantivo plural, por lo que en Present Perfect usa auxiliar \"have\".","optionErrors":{"has":"\"has\" corresponde a 3.ª persona singular, incompatible con el sujeto plural \"those people\".","is":"\"is\" no forma Present Perfect con el participio \"worked\" (eso formaría voz pasiva) ni concuerda con \"people\"."}},{"id":"d1-q17","prompt":"______ raining heavily, so take an umbrella before leaving.","options":["Is","It is","There is"],"correctAnswer":"It is","trapWarning":"Trampa L1: \"Está lloviendo\" sin sujeto.","explanation":"Regla Cambridge B1: los verbos atmosféricos (\"rain, snow\") requieren obligatoriamente el sujeto formal \"It\" → \"It is / It's raining\".","optionErrors":{"Is":"Falta el sujeto obligatorio \"It\". En inglés no se puede empezar una afirmación directamente con \"Is\".","There is":"\"There is\" no se usa delante del gerundio \"raining\" para describir el clima actual."}},{"id":"d1-q18","prompt":"If you wear a heavy coat indoors, you will ______ too hot.","options":["have","be","has"],"correctAnswer":"be","trapWarning":"Trampa L1: \"vas a tener mucho calor\".","explanation":"Regla Cambridge B1: para expresar sensación térmica en futuro (\"will + infinitivo\") se mantiene el verbo \"be\" → \"will be too hot\".","optionErrors":{"have":"Calco de \"tener calor\". Delante del adjetivo \"hot\" se usa \"be\", nunca \"have\".","has":"Tras el modal \"will\" siempre va infinitivo sin \"-s\", y además las sensaciones térmicas usan \"be\"."}},{"id":"d1-q19","prompt":"We ______ very lucky to get seats on the last train home.","options":["had","were","was"],"correctAnswer":"were","trapWarning":"Trampa L1: \"tuvimos mucha suerte\".","explanation":"Regla Cambridge B1: \"lucky\" es un adjetivo (\"afortunado\"), por lo que \"tener suerte\" se expresa con \"to be lucky\" (\"We were very lucky\").","optionErrors":{"had":"Se puede decir \"had good luck\" (sustantivo), pero delante del adjetivo \"lucky\" es obligatorio usar \"were\".","was":"\"was\" es singular, incompatible con el pronombre plural \"we\"."}},{"id":"d1-q20","prompt":"Why ______ people always complaining about the new schedule?","options":["is","are","does"],"correctAnswer":"are","trapWarning":"Trampa L1: \"¿por qué la gente siempre está quejándose?\".","explanation":"Regla Cambridge B1: pregunta en Presente Continuo (\"complaining\") para expresar queja habitual (\"always\") con sujeto plural \"people\" → \"are\".","optionErrors":{"is":"\"people\" es siempre plural; el auxiliar singular \"is\" es incorrecto.","does":"El auxiliar \"does\" exige infinitivo (\"complain\"), no gerundio (\"complaining\"), y además es singular."}}],"fallback":{"title":"Fallback Visual: Identidad (=) vs. Posesión (⊂)","triggerCondition":"Si cometes más de 1 error en la batería de 20 oraciones.","summary":"Deja de traducir palabras sueltas. Pregúntate si el concepto es un objeto/entidad que posees (HAVE ⊂) o un atributo/estado adherido al sujeto (TO BE =).","items":[{"label":"25 years old","category":"TO BE (=)","detail":"Atributo de edad en Cambridge B1: nunca se posee con \"have\"."},{"label":"Hungry / Thirsty / Sleepy","category":"TO BE (=)","detail":"Adjetivos de estado fisiológico del sujeto."},{"label":"Cold / Hot / Freezing","category":"TO BE (=)","detail":"Adjetivos de temperatura corporal o ambiental."},{"label":"Afraid / Lucky / Right","category":"TO BE (=)","detail":"Condición o cualidad predicativa del sujeto."},{"label":"People / Police","category":"PLURAL (ARE)","detail":"Sustantivos colectivos plurales invariables: siempre usan are / were / have."},{"label":"A passport / Two meetings","category":"HAVE (⊂)","detail":"Sustantivos contables de posesión real o agenda."}]},"reversion":{"title":"Protocolo de Reversión: Conjugación Pura To Be","triggerCondition":"Si persiste el sesgo del español o fallas en concordancia sujeto-verbo.","summary":"Aísla exclusivamente la mecánica de am / is / are durante 3 minutos antes de reintentar las oraciones trampa.","items":[{"id":"d1-rev-1","prompt":"The people at the conference ______ waiting for the keynote.","options":["is","are","am"],"correct":"are","rule":"Cambridge B1: \"people\" es plural obligatorio (equivale a they → are).","optionErrors":{"is":"\"people\" nunca lleva \"is\" aunque \"la gente\" sea singular en español.","am":"\"am\" solo se usa con el pronombre \"I\"."}},{"id":"d1-rev-2","prompt":"My sister and I ______ both nervous before the interview.","options":["is","am","are"],"correct":"are","rule":"Sujeto compuesto (\"My sister and I\" = we) exige verbo plural \"are\".","optionErrors":{"is":"Dos personas unidas por \"and\" forman un sujeto plural (we), no singular.","am":"Aunque termina en \"I\", el sujeto completo es \"My sister and I\" (plural → are)."}},{"id":"d1-rev-3","prompt":"Everybody in this room ______ focused on the timer.","options":["are","is","am"],"correct":"is","rule":"Cambridge B1: los indefinidos \"everybody / everyone / someone\" son gramaticalmente singulares (is).","optionErrors":{"are":"\"everybody\" se refiere a todos en significado, pero su gramática en inglés es estrictamente singular (\"is\").","am":"\"am\" solo se usa con \"I\"."}},{"id":"d1-rev-4","prompt":"______ essential to avoid literal translation.","options":["Is","It is","Are"],"correct":"It is","rule":"Cláusula impersonal con adjetivo + infinitivo exige sujeto formal \"It\".","optionErrors":{"Is":"Falta el sujeto formal \"It\"; en inglés ninguna oración declarativa empieza por \"Is\".","Are":"Falta el sujeto y además el verbo debe ser singular (\"It is\")."}}]}},{"id":2,"shortTitle":"Día 2","title":"Dominio de la Continuidad: Tiempos Perfectos","objective":"Conectar acciones pasadas con el presente usando Present Perfect (incluyendo contracciones válidas como I've, she's, haven't), discriminando since/for y posicionando yet/already/just.","timeLimitLabel":"10 transformaciones · Sin Presente Simple","questionTimeLimitSec":null,"totalExamTimeLimitSec":null,"targetAccuracy":90,"execution":{"principle":"En los criterios de Cambridge B1 Preliminary (Grammar in Use, Unidades 7–12), el Presente Simple describe hábitos o verdades generales, jamás duración acumulada hasta el presente. Traducir \"Vivo aquí desde 2020\" como \"I live here since 2020\" delata inmediatamente nivel A2. Toda continuidad desde el pasado hasta ahora exige Present Perfect (have/has + participio), aceptando tanto formas completas como contracciones (I've, she's, haven't).","l1TrapExamples":[{"wrong":"I live here since 2020.","right":"I have lived (o I’ve lived) here since 2020.","reason":"Tiempo no acabado (Unfinished Time): la acción nace en 2020 y sigue vigente hoy → exige Present Perfect."},{"wrong":"She works in this bank for five years.","right":"She has worked (o She’s worked) in this bank for five years.","reason":"\"For five years\" expresa duración hasta el presente; el Presente Simple es agramatical aquí en Cambridge B1."},{"wrong":"I haven’t finished already the report.","right":"I haven’t finished the report yet.","reason":"\"Yet\" se ubica al final de oraciones negativas e interrogativas; \"already\" va entre auxiliar y participio en afirmativas."}],"rules":[{"title":"Since (Punto de Inicio) vs. For (Duración)","formula":"SINCE + punto exacto (2020, Monday, I arrived)  |  FOR + bloque de tiempo (5 years, 2 months, a long time)","note":"Prueba Cambridge: si puedes preguntar \"Since when?\" usa since; si responde a \"How long?\" usa for."},{"title":"Contracciones y Posición de Adverbios (Just / Already / Yet)","formula":"I’ve / She’s + JUST / ALREADY + participio  |  haven’t / hasn’t + participio + ... + YET","note":"Se aceptan contracciones naturales (I've, she's, he's, we've, they've, haven't, hasn't) y formas completas."}]},"verificationMode":"translation-input","verificationInstructions":"Transforma estas 10 oraciones del español al inglés usando Present Perfect. Puedes usar contracciones (I've, she's, haven't) o formas completas; el sistema detectará errores específicos de Presente Simple, since/for, auxiliar o participio.","questions":[{"id":"d2-q1","prompt":"Vivo aquí desde 2020. (verbo: live)","correctAnswer":"I have lived here since 2020. (o I've lived here since 2020.)","acceptedAnswers":["i have lived here since 2020","i have been living here since 2020"],"trapWarning":"Error clásico L1: \"I live here since 2020\".","explanation":"Estándar Cambridge B1: una acción iniciada en un punto del pasado (since 2020) que continúa en el presente exige Present Perfect (\"I have lived\" / \"I've lived\" o Present Perfect Continuous \"I've been living\")."},{"id":"d2-q2","prompt":"Ella trabaja en esta empresa desde hace cinco años. (verbo: work)","correctAnswer":"She has worked in this company for five years. (o She's worked...)","acceptedAnswers":["she has worked in this company for five years","she has worked at this company for five years","she has been working in this company for five years","she has been working at this company for five years"],"trapWarning":"Error clásico L1: usar Presente Simple (\"She works...\") o \"since five years\".","explanation":"Estándar Cambridge B1: \"cinco años\" es un periodo de duración (→ \"for five years\"), no un punto de inicio, y la continuidad hasta hoy obliga usar \"has worked\" (o \"she's worked\")."},{"id":"d2-q3","prompt":"Nos conocemos desde la universidad. (verbo: know)","correctAnswer":"We have known each other since university. (o We've known...)","acceptedAnswers":["we have known each other since university","we have known each other since college"],"trapWarning":"Error clásico: usar \"We know\", olvidar \"each other\" o escribir \"knowed\".","explanation":"Estándar Cambridge B1: \"know\" es un verbo de estado (stative verb, no admite forma continua \"-ing\") e irregular (\"know–knew–known\"). El punto de inicio \"university\" exige \"since\"."},{"id":"d2-q4","prompt":"Todavía no he enviado el correo. (verbo: send)","correctAnswer":"I haven't sent the email yet. (o I have not sent the email yet.)","acceptedAnswers":["i have not sent the email yet","i have not sent the mail yet"],"trapWarning":"Error clásico: poner \"yet\" al inicio o usar Pasado Simple (\"didn't send\").","explanation":"Estándar Cambridge B1: para expresar una acción pendiente hasta el momento actual se usa Present Perfect negativo (\"haven't sent\" / \"have not sent\") con \"yet\" al final de la oración."},{"id":"d2-q5","prompt":"Ellos acaban de llegar a la oficina. (verbo: arrive)","correctAnswer":"They have just arrived at the office. (o They've just arrived...)","acceptedAnswers":["they have just arrived at the office","they have just arrived in the office","they have just arrived to the office"],"trapWarning":"Error clásico L1: traducir \"acaban de\" como \"finish to\".","explanation":"Estándar Cambridge B1: \"acabar de hacer algo\" se expresa exclusivamente con \"have/has + just + participio\" (\"They've just arrived\"). Además, en inglés se dice \"arrive at\" (un lugar/edificio), no \"arrive to\"."},{"id":"d2-q6","prompt":"Él ya ha terminado el informe. (verbo: finish)","correctAnswer":"He has already finished the report. (o He's already finished...)","acceptedAnswers":["he has already finished the report","he has finished the report already"],"trapWarning":"Error clásico: usar \"have\" con \"he\" o traducir en presente simple.","explanation":"Estándar Cambridge B1: tercera persona singular exige auxiliar \"has\" (o contracción \"He's\"), y \"already\" se coloca normalmente entre el auxiliar y el participio (\"has already finished\")."},{"id":"d2-q7","prompt":"Tengo este portátil desde el lunes. (verbo: have)","correctAnswer":"I have had this laptop since Monday. (o I've had this laptop since Monday.)","acceptedAnswers":["i have had this laptop since monday"],"trapWarning":"Doble \"have\": evitar \"have had\" y caer en \"I have this laptop since Monday\".","explanation":"Estándar Cambridge B1: \"have\" (posesión) es verbo de estado; en Present Perfect combina auxiliar \"have\" + participio \"had\" (\"I've had this laptop since Monday\")."},{"id":"d2-q8","prompt":"No hemos visto a Carlos desde marzo. (verbo: see)","correctAnswer":"We haven't seen Carlos since March. (o We have not seen Carlos since March.)","acceptedAnswers":["we have not seen carlos since march"],"trapWarning":"Error clásico: usar \"saw\" (pasado simple) en lugar del participio \"seen\".","explanation":"Estándar Cambridge B1: el verbo irregular \"see\" tiene participio \"seen\" (see–saw–seen). Con \"since March\" es obligatorio Present Perfect negativo (\"haven't seen\")."},{"id":"d2-q9","prompt":"¿Has estado alguna vez en Londres? (verbo: be)","correctAnswer":"Have you ever been to London?","acceptedAnswers":["have you ever been to london","have you ever been in london"],"trapWarning":"Error clásico: usar \"Did you ever go...\" o \"gone to\" cuando la persona regresó.","explanation":"Estándar Cambridge B1: las experiencias vitales usan \"Have you ever + participio\". En Cambridge se distingue \"been to\" (fuiste y volviste) de \"gone to\" (sigues allí todavía)."},{"id":"d2-q10","prompt":"Estudio inglés desde hace dos meses. (verbo: study)","correctAnswer":"I have studied English for two months. (o I've been studying...)","acceptedAnswers":["i have studied english for two months","i have been studying english for two months"],"trapWarning":"Error clásico L1: \"I study English since two months ago\".","explanation":"Estándar Cambridge B1: \"dos meses\" es una duración (\"for two months\"), nunca \"since ... ago\". Tanto \"I've studied\" como \"I've been studying\" son plenamente válidos."}],"fallback":{"title":"Fallback Visual: Línea de Tiempo Temporal (Cambridge Unfinished Time)","triggerCondition":"Si usas presente simple (\"I live...\") o confundes since con for.","summary":"Visualiza la línea temporal. Si la flecha nace en el pasado y cruza la frontera del AHORA, el Presente Simple queda prohibido.","items":[{"label":"2020 → AHORA","category":"SINCE","detail":"Marca un punto exacto en el calendario o reloj (since 9 AM, since 2020, since Monday)."},{"label":"[ 5 años ] → AHORA","category":"FOR","detail":"Mide la longitud completa del intervalo de tiempo (for 5 years, for two months)."},{"label":"Acción recién hecha","category":"JUST","detail":"Entre auxiliar y participio: \"They've JUST arrived\"."},{"label":"Antes de lo esperado","category":"ALREADY","detail":"Entre auxiliar y participio en afirmativas: \"He's ALREADY finished\"."},{"label":"Pendiente en negativa","category":"YET","detail":"Siempre al final de la frase: \"I haven't sent it YET\"."}]},"reversion":{"title":"Protocolo de Reversión: Participios Irregulares Críticos","triggerCondition":"Si el fallo es morfológico (escribir \"saw\", \"knowed\" o \"writed\") y no lógico.","summary":"Consolida las 3 columnas de los verbos de mayor frecuencia en Cambridge B1 antes de ensamblar oraciones completas.","items":[{"id":"d2-rev-1","prompt":"Present: know | Past: knew | Past Participle: ______","options":["knowed","known","knew"],"correct":"known","rule":"Paradigma irregular Cambridge: know – knew – known.","optionErrors":{"knowed":"\"know\" no es un verbo regular; no añade \"-ed\".","knew":"\"knew\" es Pasado Simple, pero tras \"have/has\" se exige el participio \"known\"."}},{"id":"d2-rev-2","prompt":"Present: see | Past: saw | Past Participle: ______","options":["seen","saw","seed"],"correct":"seen","rule":"Paradigma irregular Cambridge: see – saw – seen.","optionErrors":{"saw":"\"saw\" es solo para Pasado Simple (\"I saw him yesterday\"), nunca después de \"have/haven't\".","seed":"\"seed\" no es una forma verbal de \"see\" (significa semilla)."}},{"id":"d2-rev-3","prompt":"Present: write | Past: wrote | Past Participle: ______","options":["wrote","writed","written"],"correct":"written","rule":"Paradigma irregular Cambridge: write – wrote – written (con doble t).","optionErrors":{"wrote":"\"wrote\" es Pasado Simple; con auxiliar \"have/has\" exige \"written\".","writed":"\"write\" es irregular; no acepta terminación \"-ed\"."}},{"id":"d2-rev-4","prompt":"Present: have | Past: had | Past Participle: ______","options":["haved","has","had"],"correct":"had","rule":"Paradigma irregular Cambridge: have – had – had (por eso se dice \"I've had\").","optionErrors":{"haved":"\"haved\" no existe en inglés; el participio es \"had\".","has":"\"has\" es 3.ª persona del presente, no un participio pasado."}}]}},{"id":3,"shortTitle":"Día 3","title":"Condicionalidad y Deducción Modal B1","objective":"Dominar el Segundo Condicional para hipótesis irreales y aplicar modales de deducción lógica (must / can't / might) según el estándar Cambridge B1/B2.","timeLimitLabel":"8 micro-diálogos · Precisión lógica","questionTimeLimitSec":null,"totalExamTimeLimitSec":null,"targetAccuracy":88,"execution":{"principle":"En los exámenes Cambridge B1/B2 y EnglishScore, la frontera entre A2 y B1 se evalúa mediante hipótesis no reales (Second Conditional) y deducción epistémica basada en evidencia. El error más penalizado en hispanohablantes es usar \"mustn't\" para deducir que algo es imposible (en inglés, el opuesto lógico de \"must\" en deducción es siempre \"can't\").","l1TrapExamples":[{"wrong":"She isn’t answering. She mustn’t be at home.","right":"She isn’t answering. She can’t be at home.","reason":"Cambridge Grammar: \"mustn't\" expresa prohibición (\"no debes\"), jamás deducción negativa (\"no puede ser\")."},{"wrong":"If I would have time, I would go.","right":"If I had time, I would go.","reason":"La cláusula subordinada con \"If\" no admite \"would\"; exige Past Simple para marcar irrealidad presente."}],"rules":[{"title":"Second Conditional (Hipótesis Irreal o Consejo)","formula":"If + Sujeto + Past Simple (had / were / knew), Sujeto + WOULD (o ’d) + infinitivo","note":"En registro Cambridge B1/B2 se prefiere \"If I were you...\" sobre \"If I was you\"."},{"title":"Modales de Deducción en Presente (Epistemic Modality)","formula":"95–100% Seguro (+) = MUST | 95–100% Seguro (-) = CAN’T | ~50% Probable = MIGHT / MAY / COULD","note":"Recuerda: \"mustn't\" = prohibición de norma (\"You mustn't park here\"), nunca deducción."}]},"verificationMode":"dialogue-deduction","verificationInstructions":"Resuelve estos 8 micro-diálogos deduciendo el estado lógico del personaje según la evidencia o completando hipótesis irreales.","questions":[{"id":"d3-q1","prompt":"A: \"Look, all the lights in Marco’s office are off and his car is gone.\" — B: \"He ______ still be working; it’s 10 PM.\"","options":["mustn't","can't","might"],"correctAnswer":"can't","trapWarning":"Distractor algorítmico clásico: \"mustn't\".","explanation":"Regla Cambridge B1/B2 (Deducción negativa): la evidencia (\"lights are off, car is gone\") indica certeza negativa casi total → se usa \"can't\" (\"no puede estar trabajando\").","optionErrors":{"mustn't":"\"mustn't\" en inglés significa prohibición (\"tiene prohibido trabajar\"), nunca imposibilidad lógica.","might":"\"might\" expresa duda (50%), pero las luces apagadas y la ausencia de su coche aportan evidencia contundente."}},{"id":"d3-q2","prompt":"A: \"Laura has been sneezing all morning and has a fever.\" — B: \"She ______ have the flu. Send her home.\"","options":["must","can","would"],"correctAnswer":"must","trapWarning":"Confusión entre obligación y deducción lógica positiva.","explanation":"Regla Cambridge B1/B2 (Deducción positiva): ante síntomas claros (\"sneezing, fever\"), la conclusión lógica segura (~99%) se expresa con \"must\".","optionErrors":{"can":"\"can\" afirmativo expresa habilidad o permiso, pero no se usa para deducir certeza (\"must\") en presente.","would":"\"would\" indica condición hipotética o hábito pasado, no deducción por evidencia actual."}},{"id":"d3-q3","prompt":"If our team ______ a bigger budget, we would hire two more analysts.","options":["would have","had","has"],"correctAnswer":"had","trapWarning":"Calco frecuente: introducir \"would\" dentro de la cláusula \"If\".","explanation":"Regla Cambridge B1 (Second Conditional): para situaciones hipotéticas irreales en el presente, la cláusula \"If\" exige Past Simple (\"had\"), y la principal usa \"would + infinitivo\".","optionErrors":{"would have":"Prohibido poner \"would\" inmediatamente en la cláusula condicional \"If\" (excepto peticiones formales).","has":"\"has\" es Presente Simple (First Conditional), incompatible con \"would hire\" en la cláusula principal."}},{"id":"d3-q4","prompt":"A: \"Why isn’t David joining the call?\" — B: \"I’m not sure. His train ______ be delayed because of the rain.\"","options":["must","might","can't"],"correctAnswer":"might","trapWarning":"Ignorar la pista léxica \"I’m not sure\" (50% probabilidad).","explanation":"Regla Cambridge B1: cuando el hablante expresa incertidumbre (\"I'm not sure\"), se emplean modales de posibilidad (\"might / may / could\").","optionErrors":{"must":"\"must\" expresa ~99% de seguridad, lo cual contradice directamente \"I'm not sure\".","can't":"\"can't\" expresa imposibilidad lógica, pero el hablante plantea una hipótesis posible."}},{"id":"d3-q5","prompt":"If I ______ you, I would double-check the contract clauses before signing.","options":["am","were","would be"],"correctAnswer":"were","trapWarning":"Uso de presente o \"would\" en consejos hipotéticos.","explanation":"Regla Cambridge B1/B2: la fórmula fija para dar consejos en Segundo Condicional utiliza el subjuntivo pasado \"were\" (\"If I were you, I would...\").","optionErrors":{"am":"\"am\" es Presente Simple y rompe la concordancia temporal del Segundo Condicional con \"would\".","would be":"Nunca se coloca \"would\" dentro de la cláusula \"If\"."}},{"id":"d3-q6","prompt":"A: \"Elena just ran a marathon in under three hours!\" — B: \"Really? She ______ be exhausted right now.\"","options":["must","may","can't"],"correctAnswer":"must","trapWarning":"Subestimar la certeza de la evidencia (\"ran a marathon\").","explanation":"Regla Cambridge B1/B2: deducción lógica obvia basada en hechos conocidos → \"must be exhausted\".","optionErrors":{"may":"\"may\" sugiere duda débil (50%), poco natural tras correr un maratón completo.","can't":"\"can't be exhausted\" significaría que es imposible que esté cansada, lo opuesto a la evidencia."}},{"id":"d3-q7","prompt":"A: \"Someone left this jacket in the lobby. Is it Tom’s?\" — B: \"No, it ______ be Tom’s; it’s way too small for him.\"","options":["mustn't","can't","might not"],"correctAnswer":"can't","trapWarning":"Elegir \"mustn't\" creyendo que es el negativo de \"must\" en deducciones.","explanation":"Regla Cambridge B1/B2: la talla demasiado pequeña aporta certeza negativa (\"imposible que sea de Tom\") → \"can't\".","optionErrors":{"mustn't":"\"mustn't\" expresa prohibición normativa, nunca deducción sobre identidad o hechos.","might not":"\"might not\" indica solo duda (\"tal vez no\"), insuficiente ante \"No... way too small\"."}},{"id":"d3-q8","prompt":"What would you change in the schedule if you ______ the project manager?","options":["became","would become","become"],"correctAnswer":"became","trapWarning":"Repetir \"would\" en la pregunta condicional.","explanation":"Regla Cambridge B1: aunque la cláusula \"If\" aparezca en la segunda mitad de la pregunta, sigue exigiendo Past Simple (\"became\").","optionErrors":{"would become":"No se usa \"would\" dentro de la cláusula subordinada introducida por \"if\".","become":"\"become\" es presente; con \"would you change\" se necesita pasado (\"became\")."}}],"fallback":{"title":"Fallback Matemático: Escala Cambridge de Deducción Modal","triggerCondition":"Si dudas entre must, can't y might o usas mustn't para deducir.","summary":"Traduce la evidencia del diálogo a porcentaje de certeza antes de elegir el modal. Nunca uses lógica intuitiva del español.","items":[{"label":"99% Seguro AFIRMATIVO","category":"MUST","detail":"Evidencia sólida a favor (\"has a fever\", \"ran a marathon\")."},{"label":"99% Seguro NEGATIVO","category":"CAN’T","detail":"Imposibilidad lógica (\"way too small\", \"lights are off\"). Prohibido mustn't."},{"label":"50% Probable / Duda","category":"MIGHT / MAY","detail":"Pistas de incertidumbre (\"I'm not sure\", \"perhaps\", \"maybe\")."},{"label":"Prohibición (Regla)","category":"MUSTN’T","detail":"Uso exclusivo de obligación negativa (\"You mustn't smoke here\"), nunca deducción."}]},"reversion":{"title":"Protocolo de Reversión: Aislar Cláusula IF en Pasado","triggerCondition":"Si fallas en la estructura del Segundo Condicional.","summary":"Olvida el \"would\" por un momento y entrena únicamente la primera mitad: después de IF en hipótesis irreales va un verbo en Past Simple.","items":[{"id":"d3-rev-1","prompt":"If she ______ (know) the password, ...","options":["knew","would know","knows"],"correct":"knew","rule":"Cambridge Second Conditional: If + Past Simple (\"knew\"), sin \"would\".","optionErrors":{"would know":"\"would\" nunca va en la cláusula introducida por \"if\".","knows":"\"knows\" pertenece al First Conditional (situación real), no a hipótesis irreal."}},{"id":"d3-rev-2","prompt":"If we ______ (live) closer to the office, ...","options":["would live","lived","live"],"correct":"lived","rule":"If + Past Simple (\"lived\") para describir una realidad contraria al presente.","optionErrors":{"would live":"El auxiliar \"would\" solo aparece en la cláusula principal, nunca tras \"if\".","live":"El presente simple se reserva para condiciones reales probables."}},{"id":"d3-rev-3","prompt":"If I ______ (be) in charge of hiring, ...","options":["were","would be","am"],"correct":"were","rule":"Registro Cambridge B1/B2: \"If I were\" para situaciones irreales.","optionErrors":{"would be":"Error estructural: \"would\" no puede ir inmediatamente después de \"if\".","am":"\"am\" es presente real, no hipotético."}},{"id":"d3-rev-4","prompt":"If they ______ (have) enough data, ...","options":["had","would have","have"],"correct":"had","rule":"If + Past Simple (\"had\").","optionErrors":{"would have":"Prohibido usar \"would\" dentro de la cláusula \"if\".","have":"\"have\" es presente simple; en Segundo Condicional requiere \"had\"."}}]}},{"id":4,"shortTitle":"Día 4","title":"Evasión de Trampas Lexicográficas (Falsos Cognados)","objective":"Neutralizar distractores algorítmicos mediante respuesta automática en menos de 20 segundos por palabra (Cambridge Vocabulary in Use).","timeLimitLabel":"20s por palabra · 12 ítems","questionTimeLimitSec":20,"totalExamTimeLimitSec":null,"targetAccuracy":90,"execution":{"principle":"Los exámenes adaptativos (Cambridge B1 Preliminary / EnglishScore) insertan falsos cognados —palabras idénticas en raíz latina pero de significado divergente— como distractores de alta probabilidad. Bajo límite de 20 segundos, la lectura intuitiva en español falla; es indispensable automatizar la equivalencia semántica real.","l1TrapExamples":[{"wrong":"Actually = Actualmente (hoy en día)","right":"Actually = De hecho / En realidad","reason":"Cambridge Vocabulary: \"actually\" introduce contraste o corrección (\"in fact\"); \"actualmente\" es \"currently\" o \"nowadays\"."},{"wrong":"Fabric = Fábrica industrial","right":"Fabric = Tela / Tejido","reason":"\"Fabric\" refiere al material textil; una fábrica industrial es \"factory\" o \"plant\"."},{"wrong":"Sensible = Emocionalmente frágil","right":"Sensible = Sensato / Prudente / Razonable","reason":"Alguien con sensatez es \"sensible\"; alguien sensible emocionalmente es \"sensitive\"."},{"wrong":"Assist = Asistir a una reunión","right":"Assist = Ayudar / Colaborar","reason":"\"Assist\" equivale a \"help\"; asistir a un evento o clase es \"attend\"."}],"rules":[{"title":"Matriz Cambridge de Falsos Cognados Críticos","formula":"Actually (de hecho) ≠ Currently | Fabric (tela) ≠ Factory | Sensible (sensato) ≠ Sensitive | Assist (ayudar) ≠ Attend","note":"Vigila también: Library (biblioteca) ≠ Bookshop | Realize (darse cuenta) ≠ Carry out | Eventually (finalmente) ≠ Occasionally."}]},"verificationMode":"timed-vocab","verificationInstructions":"Test cronometrado de 20 segundos estrictos por palabra. Si el reloj llega a 00:00, el sistema registra fallo por latencia.","questions":[{"id":"d4-q1","prompt":"\"I thought the meeting was cancelled, but it was ACTUALLY moved to Room B.\" ¿Qué significa ACTUALLY?","options":["Actualmente","De hecho / en realidad","Recientemente"],"correctAnswer":"De hecho / en realidad","trapWarning":"Falso cognado #1: traducirlo como \"actualmente\".","explanation":"Cambridge B1 (English Profile): \"actually\" significa \"in fact\" (de hecho / en realidad) y corrige una suposición previa. \"Actualmente\" se traduce como \"currently\".","optionErrors":{"Actualmente":"Falso cognado clásico. En inglés, \"actualmente\" se expresa con \"currently\" o \"at the moment\".","Recientemente":"\"Recientemente\" es \"recently\"; \"actually\" contrasta lo que se creía frente a la realidad."}},{"id":"d4-q2","prompt":"\"This winter coat is made from high-quality wool FABRIC.\" ¿Qué es FABRIC?","options":["Fábrica","Tela / tejido","Maquinaria"],"correctAnswer":"Tela / tejido","trapWarning":"Falso cognado #2: \"fábrica\".","explanation":"Cambridge Vocabulary B1: \"fabric\" significa tela o tejido textil (aquí, tela de lana). \"Fábrica\" es \"factory\".","optionErrors":{"Fábrica":"Falso cognado. Un abrigo no está hecho \"de fábrica de lana\", sino de \"tela (fabric) de lana\"; fábrica = factory.","Maquinaria":"Significado ajeno; maquinaria es \"machinery\"."}},{"id":"d4-q3","prompt":"\"Saving 20% of your monthly income is a very SENSIBLE decision.\" ¿Qué es SENSIBLE?","options":["Sensible emocionalmente","Sensata / prudente","Delicada"],"correctAnswer":"Sensata / prudente","trapWarning":"Falso cognado #3: \"sensible\" emocional.","explanation":"Cambridge B1/B2: \"sensible\" describe buen juicio práctico (sensato, prudente). Para sensibilidad emocional se usa \"sensitive\".","optionErrors":{"Sensible emocionalmente":"Ese significado corresponde a \"sensitive\", nunca a \"sensible\".","Delicada":"Significado asociado a \"delicate\" o \"sensitive\", no a decisiones razonables (\"sensible\")."}},{"id":"d4-q4","prompt":"\"Two senior engineers will ASSIST the new intern during onboarding.\" ¿Qué es ASSIST?","options":["Asistir presencialmente","Ayudar / apoyar","Evaluar"],"correctAnswer":"Ayudar / apoyar","trapWarning":"Falso cognado #4: \"asistir a un lugar\".","explanation":"Cambridge B1: \"assist (someone)\" es un verbo formal equivalente a \"help\" (ayudar). Acudir a un evento se dice \"attend\".","optionErrors":{"Asistir presencialmente":"Acudir o presenciar una reunión/clase es \"attend\", jamás \"assist\".","Evaluar":"Evaluar es \"evaluate\" o \"assess\" (no confundir \"assess\" con \"assist\")."}},{"id":"d4-q5","prompt":"\"Did you ATTEND the quarterly budget briefing yesterday?\" ¿Qué es ATTEND?","options":["Atender a un cliente","Asistir / ir a","Aplazar"],"correctAnswer":"Asistir / ir a","trapWarning":"Confusión inversa con \"atender\".","explanation":"Cambridge B1: \"attend\" (sin preposición \"to\") significa asistir presencial o virtualmente a una reunión, clase o evento.","optionErrors":{"Atender a un cliente":"Atender o ayudar a un cliente se expresa con \"serve\", \"help\" o \"assist\", no \"attend\".","Aplazar":"Aplazar es \"postpone\" o \"put off\"."}},{"id":"d4-q6","prompt":"\"We didn’t REALIZE the server was down until clients called.\" ¿Qué es REALIZE?","options":["Realizar una tarea","Darse cuenta","Reiniciar"],"correctAnswer":"Darse cuenta","trapWarning":"Falso cognado frecuente: \"realizar\".","explanation":"Cambridge B1: \"realize\" significa comprender súbitamente o darse cuenta de algo. \"Realizar\" una tarea es \"carry out\", \"do\" o \"perform\".","optionErrors":{"Realizar una tarea":"Falso cognado clásico. Para \"realizar\" se utiliza \"carry out\" o \"perform\".","Reiniciar":"Reiniciar es \"restart\" o \"reboot\"."}},{"id":"d4-q7","prompt":"\"Please borrow the reference manual from the campus LIBRARY.\" ¿Qué es LIBRARY?","options":["Librería (tienda)","Biblioteca","Archivo digital"],"correctAnswer":"Biblioteca","trapWarning":"Falso cognado: \"librería\".","explanation":"Cambridge A2/B1: \"library\" es biblioteca (lugar donde se toman prestados libros: \"borrow\"). Una tienda donde se compran es \"bookstore / bookshop\".","optionErrors":{"Librería (tienda)":"En una tienda no se usa el verbo \"borrow\" (pedir prestado). Librería = bookshop / bookstore.","Archivo digital":"Un archivo digital es \"digital archive\" o \"repository\"."}},{"id":"d4-q8","prompt":"\"EVENTUALLY, after six months of negotiations, both firms signed.\" ¿Qué es EVENTUALLY?","options":["De vez en cuando","Finalmente / con el tiempo","Posiblemente"],"correctAnswer":"Finalmente / con el tiempo","trapWarning":"Falso cognado: \"eventualmente\" (ocasionalmente).","explanation":"Cambridge B1/B2: \"eventually\" indica el resultado final tras un largo proceso (\"in the end\"). \"De vez en cuando\" es \"occasionally\".","optionErrors":{"De vez en cuando":"Falso cognado de \"eventualmente\" en español. En inglés se dice \"occasionally\".","Posiblemente":"Posiblemente es \"possibly\" o \"perhaps\"."}},{"id":"d4-q9","prompt":"\"She felt EMBARRASSED when she forgot the client’s name.\" ¿Qué es EMBARRASSED?","options":["Embarazada","Avergonzada / incómoda","Enojada"],"correctAnswer":"Avergonzada / incómoda","trapWarning":"Falso cognado clásico: \"embarazada\".","explanation":"Cambridge B1: \"embarrassed\" describe vergüenza social o incomodidad. \"Embarazada\" es \"pregnant\".","optionErrors":{"Embarazada":"Falso cognado muy penalizado: \"pregnant\" significa embarazada.","Enojada":"Enojada es \"angry\" o \"upset\"."}},{"id":"d4-q10","prompt":"\"The startup is CURRENTLY hiring backend developers.\" ¿Qué es CURRENTLY?","options":["Habitualmente","Actualmente / en este momento","Rápidamente"],"correctAnswer":"Actualmente / en este momento","trapWarning":"Confusión con \"corrientemente\".","explanation":"Cambridge B1: \"currently\" equivale a \"at present / right now\" (actualmente), el término correcto frente al falso amigo \"actually\".","optionErrors":{"Habitualmente":"Habitualmente es \"usually\" o \"habitually\".","Rápidamente":"Rápidamente es \"quickly\" o \"rapidly\"."}},{"id":"d4-q11","prompt":"\"Before the final presentation, let’s RESUME the discussion on pricing.\" ¿Qué es RESUME?","options":["Resumir en pocas líneas","Reanudar / retomar","Cancelar"],"correctAnswer":"Reanudar / retomar","trapWarning":"Falso cognado: \"resumir\".","explanation":"Cambridge B2: el verbo \"resume\" significa retomar algo que se había interrumpido. \"Resumir\" es \"summarize\".","optionErrors":{"Resumir en pocas líneas":"Falso cognado: para resumir se usa el verbo \"summarize\".","Cancelar":"Cancelar es \"cancel\" o \"call off\"."}},{"id":"d4-q12","prompt":"\"The product launch was a complete SUCCESS.\" vs \"EXIT\". ¿Qué significa EXIT?","options":["Éxito rotundo","Salida","Aumento"],"correctAnswer":"Salida","trapWarning":"Falso cognado fonético: \"éxito\".","explanation":"Cambridge A2/B1: \"exit\" significa salida (puerta o acción de salir). \"Éxito\" se traduce siempre como \"success\".","optionErrors":{"Éxito rotundo":"\"Éxito\" en inglés es \"success\", jamás \"exit\".","Aumento":"Aumento es \"increase\" o \"rise\"."}}],"fallback":{"title":"Fallback Mnemotécnico: Anclas en Español","triggerCondition":"Si fallas o excedes los 20 segundos en más de 2 palabras.","summary":"Asocia cada falso cognado con una frase puente de alta retención para bloquear el reflejo automático.","items":[{"label":"FABRIC → Tela","category":"Mnemotecnia","detail":"\"En la FABRIC hacen tela; en la FACTORY trabajan obreros.\""},{"label":"ACTUALLY → De hecho","category":"Mnemotecnia","detail":"\"ACTUALLY es un acto real (de hecho); CURRENTLY corre ahora mismo.\""},{"label":"SENSIBLE → Sensato","category":"Mnemotecnia","detail":"\"Una persona SENSIBLE tiene sentido común (sensato); SENSITIVE siente mucho.\""},{"label":"ASSIST → Ayudar","category":"Mnemotecnia","detail":"\"El ASISTENTE ayuda; tú ATTEND (atiendes presencialmente) a la reunión.\""},{"label":"LIBRARY → Biblioteca","category":"Mnemotecnia","detail":"\"En la LIBRARY los libros son libres (préstamo); en BOOKSHOP los compras.\""}]},"reversion":{"title":"Protocolo de Reversión: Bloques de 4–5 Palabras","triggerCondition":"Si la retención a corto plazo colapsa bajo el reloj de 20s.","summary":"Reduce la carga cognitiva entrenando primero el Bloque Nuclear sin temporizador.","items":[{"id":"d4-rev-1","prompt":"Traduce sin prisa: \"Actually\"","options":["Actualmente","De hecho","Activamente"],"correct":"De hecho","rule":"Cambridge B1: Actually = in fact / de hecho.","optionErrors":{"Actualmente":"\"Actualmente\" se dice \"currently\".","Activamente":"\"Activamente\" es \"actively\"."}},{"id":"d4-rev-2","prompt":"Traduce sin prisa: \"Fabric\"","options":["Fábrica","Tela","Edificio"],"correct":"Tela","rule":"Cambridge B1: Fabric = cloth / tela.","optionErrors":{"Fábrica":"\"Fábrica\" es \"factory\".","Edificio":"\"Edificio\" es \"building\"."}},{"id":"d4-rev-3","prompt":"Traduce sin prisa: \"Sensible\"","options":["Sensato","Emotivo","Frágil"],"correct":"Sensato","rule":"Cambridge B1: Sensible = practical / sensato.","optionErrors":{"Emotivo":"Emotivo / sensible emocional es \"sensitive\".","Frágil":"\"Frágil\" es \"fragile\" o \"sensitive\"."}},{"id":"d4-rev-4","prompt":"Traduce sin prisa: \"Assist\"","options":["Asistir a reunión","Ayudar","Firmar"],"correct":"Ayudar","rule":"Cambridge B1: Assist = help / ayudar.","optionErrors":{"Asistir a reunión":"Asistir a un evento es \"attend\".","Firmar":"\"Firmar\" es \"sign\"."}}]}},{"id":5,"shortTitle":"Día 5","title":"Ensamble Corporativo: Phrasal Verbs y Colocaciones","objective":"Distinguir la colocación ejecutiva do vs. make y dominar phrasal verbs corporativos mediante partículas direccionales (Cambridge Business / B1).","timeLimitLabel":"Informe corporativo · 10 huecos","questionTimeLimitSec":45,"totalExamTimeLimitSec":null,"targetAccuracy":85,"execution":{"principle":"En los bloques Reading/Use of English de Cambridge B1 y EnglishScore, la fluidez corporativa se mide mediante colocaciones fijas (do vs. make) y phrasal verbs. En español todo se traduce por \"hacer\", pero el inglés separa la ejecución de una tarea/proceso (DO) de la creación o toma de una decisión/resultado (MAKE).","l1TrapExamples":[{"wrong":"We need to do a decision today.","right":"We need to make a decision today.","reason":"Colocación fija Cambridge: las decisiones, errores y ofertas se crean (\"make\"), no son deberes rutinarios."},{"wrong":"She made her research / business.","right":"She did her research / business.","reason":"Actividades, trabajo, deberes e investigación siempre toman el verbo DO."},{"wrong":"They turned off the job offer.","right":"They turned down the job offer.","reason":"\"Turn down\" = rechazar una oferta o propuesta; \"turn off\" = apagar un dispositivo eléctrico."}],"rules":[{"title":"División Ejecutiva DO vs. MAKE (Collocations)","formula":"DO = procesos/tareas (research, business, a favor, the work, your best) | MAKE = resultados/creación (a decision, a mistake, progress, an offer, money)","note":"Error típico L1: usar \"do\" porque en español es \"hacer un error / hacer una decisión\"."},{"title":"Cuarteto Phrasal Corporativo","formula":"SET UP (fundar/configurar) · TURN DOWN (rechazar) · FIND OUT (averiguar) · GIVE UP (rendirse) · PUT OFF (posponer)","note":"Decodifica la partícula: UP (construir o ceder), DOWN (rechazar), OUT (revelar), OFF (aplazar/separar)."}]},"verificationMode":"corporate-cloze","verificationInstructions":"Completa el memorando corporativo seleccionando la colocación (do/make) o partícula correcta en menos de 45s por ítem.","questions":[{"id":"d5-q1","prompt":"Memo (1/10): \"Last year, Elena decided to set ______ her own logistics consultancy.\"","options":["up","down","out"],"correctAnswer":"up","trapWarning":"Confusión entre fundar (set up) y partir de viaje (set off).","explanation":"Cambridge Business B1: \"set up\" es un phrasal verb inseparable en este contexto que significa fundar una empresa, negocio o configurar un sistema.","optionErrors":{"down":"\"set down\" significa anotar por escrito o dejar algo en el suelo, no fundar un negocio.","out":"\"set out\" significa emprender un viaje o exponer una idea, no crear una consultora."}},{"id":"d5-q2","prompt":"Memo (2/10): \"Before launching, her team had to ______ extensive market research.\"","options":["make","do","put"],"correctAnswer":"do","trapWarning":"Trampa L1: \"hacer investigación\" induce a usar \"make\".","explanation":"Colocación fija Cambridge B1: los procesos analíticos y académicos (\"research, homework, a survey, business\") exigen \"DO\".","optionErrors":{"make":"Aunque en español sea \"hacer\", en inglés \"research\" se concibe como actividad de estudio y rechaza \"make\".","put":"\"put research\" no forma colocación válida en inglés."}},{"id":"d5-q3","prompt":"Memo (3/10): \"Unfortunately, two major banks turned ______ her initial loan application.\"","options":["up","out","down"],"correctAnswer":"down","trapWarning":"Confusión con \"turn up\" (aparecer) o \"turn out\" (resultar).","explanation":"Cambridge B1: \"turn down\" significa rechazar formalmente una solicitud, propuesta u oferta laboral.","optionErrors":{"up":"\"turn up\" significa aparecer o llegar inesperadamente (\"He turned up late\"), no rechazar.","out":"\"turn out\" significa resultar ser al final (\"It turned out well\"), no denegar un préstamo."}},{"id":"d5-q4","prompt":"Memo (4/10): \"She refused to give ______ and looked for private investors instead.\"","options":["out","up","off"],"correctAnswer":"up","trapWarning":"Confusión de partícula en \"rendirse\".","explanation":"Cambridge B1: \"give up\" significa rendirse, darse por vencido o abandonar un hábito/proyecto.","optionErrors":{"out":"\"give out\" significa repartir/distribuir documentos o agotarse (\"the battery gave out\").","off":"\"give off\" significa emitir un olor, calor o luz."}},{"id":"d5-q5","prompt":"Memo (5/10): \"Within three weeks, she ______ significant progress with angel investors.\"","options":["did","made","took"],"correctAnswer":"made","trapWarning":"Usar \"did\" por calco de \"hizo progreso\".","explanation":"Colocación fija Cambridge B1: el avance medible (\"progress, a profit, an improvement\") es un resultado creado y exige \"MAKE progress\".","optionErrors":{"did":"\"do progress\" es incorrecto; el progreso es un resultado producido y exige \"make\".","took":"\"take progress\" no es colocación natural en inglés."}},{"id":"d5-q6","prompt":"Memo (6/10): \"However, an audit helped them find ______ that shipping costs were 18% too high.\"","options":["up","out","down"],"correctAnswer":"out","trapWarning":"Confusión entre \"find\" (encontrar objeto) y \"find out\" (descubrir un dato).","explanation":"Cambridge B1: \"find out (that...)\" significa averiguar o descubrir información que antes era desconocida.","optionErrors":{"up":"\"find up\" no existe como phrasal verb estándar.","down":"\"find down\" no existe en inglés estándar."}},{"id":"d5-q7","prompt":"Memo (7/10): \"Management had to ______ a difficult decision regarding regional warehouses.\"","options":["do","make","give"],"correctAnswer":"make","trapWarning":"Trampa L1: \"hacer una decisión\" → \"do\".","explanation":"Colocación obligatoria Cambridge B1: siempre se dice \"MAKE a decision\" (o \"take a decision\" en registro británico), nunca \"do\".","optionErrors":{"do":"\"do a decision\" es uno de los errores hispanohablantes más penalizados en el nivel B1.","give":"\"give a decision\" no es la colocación estándar corporativa (\"make a decision\")."}},{"id":"d5-q8","prompt":"Memo (8/10): \"Once we ______ business with reliable suppliers, delivery times dropped.\"","options":["did","made","set"],"correctAnswer":"did","trapWarning":"Confusión entre \"make money\" y \"do business\".","explanation":"Colocación fija Cambridge B1: mientras el dinero se produce (\"make money\"), la actividad comercial se realiza con \"DO business (with)\".","optionErrors":{"made":"\"make business\" es un error típico L1; en inglés se dice \"do business\".","set":"\"set business\" no es una colocación válida."}},{"id":"d5-q9","prompt":"Memo (9/10): \"Even if you ______ a mistake in the first draft, review it before Friday.\"","options":["do","make","find"],"correctAnswer":"make","trapWarning":"Trampa L1: \"hacer un error\" → \"do a mistake\".","explanation":"Colocación obligatoria Cambridge A2/B1: cometer un error es siempre \"MAKE a mistake\".","optionErrors":{"do":"\"do a mistake\" es agramatical en inglés estándar; los errores se producen con \"make\".","find":"Aquí el sentido es cometer un error (\"make\"), no encontrarlo y luego revisarlo."}},{"id":"d5-q10","prompt":"Memo (10/10): \"We decided to put ______ the expansion until Q3 to protect cash flow.\"","options":["off","up","in"],"correctAnswer":"off","trapWarning":"Confusión entre posponer (put off) y tolerar (put up with).","explanation":"Cambridge B1: \"put off\" significa aplazar o posponer una reunión, evento o proyecto hasta una fecha posterior (\"until Q3\").","optionErrors":{"up":"\"put up\" significa alojar a alguien, colgar un cartel o subir precios; tolerar sería \"put up with\".","in":"\"put in\" significa instalar o invertir tiempo/esfuerzo, contrario a posponer hasta Q3."}}],"fallback":{"title":"Fallback Vectorial: Agrupación por Preposición Direccional","triggerCondition":"Si confundes los phrasal verbs o tardas \u003e45 segundos por hueco.","summary":"Decodifica la dirección física de la partícula para deducir el significado en contexto.","items":[{"label":"UP (Construcción / Tope)","category":"Vector UP","detail":"Set up (levantar/fundar) · Give up (levantar manos/rendirse)."},{"label":"DOWN (Rechazo / Caída)","category":"Vector DOWN","detail":"Turn down (bajar el pulgar = rechazar oferta o bajar volumen)."},{"label":"OUT (Sacar a la luz)","category":"Vector OUT","detail":"Find out (sacar un dato oculto = averiguar) · Carry out (llevar a cabo)."},{"label":"OFF (Separación / Aplazamiento)","category":"Vector OFF","detail":"Put off (empujar fuera de la fecha actual = posponer)."}]},"reversion":{"title":"Protocolo de Reversión: Preposiciones Dependientes Base (Cambridge B1)","triggerCondition":"Si los verbos frasales saturan la memoria funcional.","summary":"Estabiliza primero las preposiciones fijas de adjetivos y verbos base que garantizan puntos rápidos en el bloque B1.","items":[{"id":"d5-rev-1","prompt":"Our delivery times depend ______ the weather.","options":["of","on","in"],"correct":"on","rule":"Cambridge B1: depend ON (nunca \"depend of\" por calco de \"depender de\").","optionErrors":{"of":"Error clásico L1: \"depender de\" se traduce en inglés con \"on\", jamás \"of\".","in":"\"depend in\" no existe en inglés."}},{"id":"d5-rev-2","prompt":"She is married ______ an architect from Lisbon.","options":["with","to","by"],"correct":"to","rule":"Cambridge B1: married TO someone (nunca \"married with\").","optionErrors":{"with":"Calco de \"casada con\". En inglés es obligatorio \"married TO\".","by":"\"married by\" solo indica quién ofició la boda (\"married by a judge\")."}},{"id":"d5-rev-3","prompt":"Who is responsible ______ updating the database?","options":["of","for","to"],"correct":"for","rule":"Cambridge B1: responsible FOR + sustantivo / -ing.","optionErrors":{"of":"Calco de \"responsable de\". Exige \"for\".","to":"\"responsible to\" indica ante qué jefe rindes cuentas, no la tarea a cargo."}},{"id":"d5-rev-4","prompt":"He is very interested ______ financial analytics.","options":["on","in","about"],"correct":"in","rule":"Cambridge B1: interested IN (nunca \"interested on\").","optionErrors":{"on":"\"interested on\" es agramatical.","about":"\"about\" se usa con \"worried about\" o \"excited about\", no con \"interested\"."}}]}},{"id":6,"shortTitle":"Día 6","title":"Arquitectura y Conexión Textual (Reading)","objective":"Aplicar reglas sintácticas inflexibles de conectores concesivos (despite, although, however) en menos de 45 segundos por ítem (Cambridge B1/B2).","timeLimitLabel":"45s por ítem · Descarte gramatical","questionTimeLimitSec":45,"totalExamTimeLimitSec":null,"targetAccuracy":88,"execution":{"principle":"En el Reading y Use of English de Cambridge B1/B2 y EnglishScore, \"despite\", \"although\" y \"however\" comparten significado de contraste (\"aunque / a pesar de / sin embargo\"). Por tanto, el ítem NO se resuelve traduciendo la idea, sino analizando la categoría gramatical que sigue al espacio en blanco.","l1TrapExamples":[{"wrong":"Despite it rained heavily, we arrived on time.","right":"Although it rained heavily, we arrived on time.","reason":"\"It rained\" tiene sujeto y verbo conjugado (cláusula completa) → \"despite\" queda prohibido."},{"wrong":"Although the heavy rain, we arrived on time.","right":"Despite the heavy rain, we arrived on time.","reason":"\"The heavy rain\" es un sintagma nominal sin verbo → \"although\" es imposible; exige preposición \"despite / in spite of\"."},{"wrong":"We tried hard, however we missed the train.","right":"We tried hard; however, we missed the train.","reason":"Cambridge Punctuation Rule: \"however\" es adverbio conjuntivo; exige punto o punto y coma antes y coma después."}],"rules":[{"title":"Preposiciones Concesivas (DESPITE / IN SPITE OF)","formula":"Despite / In spite of + [Sustantivo | Gerundio -ing | the fact that + cláusula]","note":"Error eliminatorio Cambridge: \"Despite of\" no existe jamás."},{"title":"Conjunciones Subordinantes (ALTHOUGH / EVEN THOUGH)","formula":"Although / Even though + [Sujeto + Verbo conjugado]","note":"\"Even though\" aporta mayor énfasis que \"although\", pero comparte exactamente la misma sintaxis."},{"title":"Adverbio Conjuntivo (HOWEVER)","formula":"... ; however, [Sujeto + Verbo]  |  ... . However, [Sujeto + Verbo]","note":"Se identifica en 1 segundo por ir flanqueado por puntuación fuerte (;/.) y una coma."}]},"verificationMode":"connector-mc","verificationInstructions":"8 ítems cronometrados a 45 segundos máximos por pregunta. Inspecciona las palabras posteriores al hueco y aplica descarte gramatical Cambridge.","questions":[{"id":"d6-q1","prompt":"______ working overtime all week, the engineering team still missed the launch window.","options":["Although","Despite","However"],"correctAnswer":"Despite","postGapToken":"working overtime (-ing)","postGapType":"noun_gerund","trapWarning":"Traducir \"Aunque trabajaron...\" induce a elegir \"Although\".","explanation":"Regla Cambridge B1/B2: inmediatamente después del hueco hay un gerundio (\"working\") sin sujeto ni verbo conjugado. Solo la preposición \"Despite\" (o \"In spite of\") puede preceder a un gerundio.","optionErrors":{"Although":"\"Although\" es conjunción subordinante y exige sujeto + verbo conjugado (\"Although they worked...\"), nunca gerundio directo.","However":"\"However\" no subordina ni encabeza una cláusula participial sin puntuación ni verbo conjugado."}},{"id":"d6-q2","prompt":"______ the software update was expensive, it reduced server crashes by 60%.","options":["Despite","In spite of","Even though"],"correctAnswer":"Even though","postGapToken":"the software update WAS (Sujeto + Verbo)","postGapType":"clause_verb","trapWarning":"Keyword trap: ver \"the software update\" al inicio e ignorar el verbo \"was\".","explanation":"Regla Cambridge B1/B2: \"the software update\" es sujeto y \"was\" es su verbo conjugado. Al haber cláusula completa, se exige conjunción (\"Even though\" / \"Although\").","optionErrors":{"Despite":"\"Despite\" no puede introducir una cláusula con verbo conjugado (\"was\"); requeriría \"Despite the expensive update\".","In spite of":"Al igual que \"despite\", \"in spite of\" es preposición y no admite verbo conjugado detrás (salvo con \"the fact that\")."}},{"id":"d6-q3","prompt":"Sales grew by 14% in Europe; ______, operational costs increased even faster.","options":["although","despite","however"],"correctAnswer":"however","postGapToken":", operational costs (coma tras punto y coma)","postGapType":"clause_verb","trapWarning":"Ignorar la puntuación fuerte (punto y coma + coma).","explanation":"Regla Cambridge B1/B2: entre punto y coma (;) y una coma (,) obligatoria va el adverbio conjuntivo \"however\" conectando dos oraciones independientes.","optionErrors":{"although":"\"although\" no lleva coma inmediatamente detrás ni va precedido de punto y coma para unir cláusulas.","despite":"\"despite\" nunca va aislado entre punto y coma y coma sin complemento nominal."}},{"id":"d6-q4","prompt":"We decided to continue the outdoor event ______ the sudden drop in temperature.","options":["although","in spite of","however"],"correctAnswer":"in spite of","postGapToken":"the sudden drop (Sintagma nominal)","postGapType":"noun_gerund","trapWarning":"Asumir un verbo inexistente y marcar \"although\".","explanation":"Regla Cambridge B1/B2: \"the sudden drop in temperature\" es un sintagma nominal puro (sin verbo conjugado) → requiere la locución preposicional \"in spite of\".","optionErrors":{"although":"Después del hueco no hay ningún verbo conjugado; \"although\" necesita obligatoriamente sujeto + verbo.","however":"\"however\" no funciona como preposición delante de un sustantivo (\"the sudden drop\")."}},{"id":"d6-q5","prompt":"______ she had zero prior experience in finance, Nadia passed the audit exam.","options":["Despite","Although","Despite of"],"correctAnswer":"Although","postGapToken":"she HAD (Sujeto + Verbo)","postGapType":"clause_verb","trapWarning":"Distractor \"Despite of\" (error gramatical grave).","explanation":"Regla Cambridge B1/B2: sujeto (\"she\") + verbo conjugado en pasado (\"had\") forma cláusula completa y exige \"Although\".","optionErrors":{"Despite":"\"Despite\" prohíbe cláusula con verbo conjugado detrás (\"she had\").","Despite of":"\"Despite of\" NO existe en inglés (se mezcla indebidamente \"despite\" con \"in spite of\")."}},{"id":"d6-q6","prompt":"______ the fact that the flight was delayed, the delegates arrived before dinner.","options":["Although","Despite","However"],"correctAnswer":"Despite","postGapToken":"the fact that... (Sustantivo puente)","postGapType":"noun_gerund","trapWarning":"Ver \"was delayed\" más adelante y pasar por alto \"the fact that\".","explanation":"Regla Cambridge B2: la palabra inmediata tras el hueco es el sustantivo \"the fact\", que convierte toda la cláusula posterior en complemento nominal → exige \"Despite\".","optionErrors":{"Although":"\"Although the fact that...\" es agramatical porque duplica conectores de cláusula.","However":"\"However\" no puede regir el sintagma \"the fact that...\"."}},{"id":"d6-q7","prompt":"The prototype looks promising. ______, we need independent safety testing before scaling.","options":["Although","Despite","However"],"correctAnswer":"However","postGapToken":", we need (Inicio de oración tras punto + coma)","postGapType":"clause_verb","trapWarning":"Colocar \"Although\" seguido de coma aislada al inicio de nueva oración.","explanation":"Regla Cambridge B1/B2: cuando el conector inicia una nueva oración tras punto y va seguido inmediatamente por coma, solo es válido \"However\".","optionErrors":{"Although":"\"Although\" subordina dos ideas dentro de la misma oración y jamás lleva una coma inmediatamente después.","Despite":"\"Despite\" nunca va seguido de coma como adverbio independiente."}},{"id":"d6-q8","prompt":"In ______ of his busy schedule, the director attended every training session.","options":["although","spite","despite"],"correctAnswer":"spite","postGapToken":"of his busy schedule","postGapType":"noun_gerund","trapWarning":"Elegir \"despite\" formando el error \"In despite of\".","explanation":"Regla Cambridge B1: las dos formas correctas son \"In spite of\" (3 palabras) o \"Despite\" (1 palabra). Nunca se combinan.","optionErrors":{"although":"\"In although of\" no existe en inglés.","despite":"\"In despite of\" es un cruce erróneo muy frecuente; sería solo \"Despite\" o \"In spite of\"."}}],"fallback":{"title":"Fallback Sintáctico: Escáner Post-Hueco de 3 Segundos","triggerCondition":"Si fallas al distinguir despite vs. although o superas los 45 segundos.","summary":"No traduzcas la frase completa. Mira exclusivamente las dos palabras que siguen al hueco.","items":[{"label":"Hueco + [the noun / -ing / the fact that]","category":"DESPITE / IN SPITE OF","detail":"Tacha Although y However en menos de 2 segundos."},{"label":"Hueco + [Sujeto + Verbo conjugado]","category":"ALTHOUGH / EVEN THOUGH","detail":"Tacha Despite e In spite of inmediatamente."},{"label":"[ ; o . ] + Hueco + [ , ]","category":"HOWEVER","detail":"La puntuación fuerte previa + coma posterior delata a However."},{"label":"DESPITE OF","category":"SIEMPRE FALSO","detail":"Descártala al instante; combinación inexistente en inglés."}]},"reversion":{"title":"Protocolo de Reversión: Sustantivo vs. Verbo Conjugado","triggerCondition":"Si el análisis post-hueco falla por no reconocer si hay verbo conjugado.","summary":"Entrena el ojo para distinguir en 2 segundos un bloque nominal (sin tiempo verbal) de una cláusula con verbo flexionado.","items":[{"id":"d6-rev-1","prompt":"Clasifica: \"the heavy traffic on Monday\"","options":["Sustantivo / Bloque nominal","Cláusula con verbo conjugado"],"correct":"Sustantivo / Bloque nominal","rule":"No hay verbo flexionado → requiere preposición (Despite / In spite of).","optionErrors":{"Cláusula con verbo conjugado":"Aquí no existe ningún verbo (\"heavy\" es adjetivo y \"traffic\" es sustantivo)."}},{"id":"d6-rev-2","prompt":"Clasifica: \"the traffic was terrible\"","options":["Sustantivo / Bloque nominal","Cláusula con verbo conjugado"],"correct":"Cláusula con verbo conjugado","rule":"Sujeto (\"the traffic\") + verbo (\"was\") → exige Although / Even though.","optionErrors":{"Sustantivo / Bloque nominal":"Contiene el verbo conjugado en pasado \"was\", por lo tanto es cláusula completa."}},{"id":"d6-rev-3","prompt":"Clasifica: \"having little experience\"","options":["Gerundio (-ing) / Nominal","Cláusula con verbo conjugado"],"correct":"Gerundio (-ing) / Nominal","rule":"El gerundio \"-ing\" sin auxiliar ni sujeto equivale a bloque nominal → Despite.","optionErrors":{"Cláusula con verbo conjugado":"Un gerundio aislado sin sujeto ni auxiliar (\"is/was\") no es verbo conjugado."}},{"id":"d6-rev-4","prompt":"Clasifica: \"she has little experience\"","options":["Sustantivo / Bloque nominal","Cláusula con verbo conjugado"],"correct":"Cláusula con verbo conjugado","rule":"Sujeto (\"she\") + verbo presente (\"has\") → exige Although / Even though.","optionErrors":{"Sustantivo / Bloque nominal":"Tiene sujeto explícito (\"she\") y verbo flexionado (\"has\")."}}]}}],"skimming":[{"id":"skim-1","title":"Pasaje A: Política de Trabajo Híbrido","topic":"Lectura Panorámica B1 (15s)","tokens":[{"text":"Although","role":"contrast"},{"text":"many executives","role":"subject"},{"text":"initially","role":"normal"},{"text":"questioned","role":"verb"},{"text":"remote productivity,","role":"normal"},{"text":"recent quarterly audits","role":"subject"},{"text":"demonstrate","role":"verb"},{"text":"that hybrid teams","role":"subject"},{"text":"deliver","role":"verb"},{"text":"projects 12% faster.","role":"normal"},{"text":"However,","role":"contrast"},{"text":"junior analysts","role":"subject"},{"text":"still","role":"normal"},{"text":"require","role":"verb"},{"text":"on-site mentoring.","role":"normal"}],"summaryCheck":{"question":"Sin traducir todo el texto, ¿cuál es el giro principal tras el marcador de contraste?","options":["Los ejecutivos prohibieron el trabajo remoto.","Los equipos híbridos entregan más rápido, aunque los analistas junior necesitan mentoría presencial.","La productividad cayó un 12% por falta de auditorías."],"correct":"Los equipos híbridos entregan más rápido, aunque los analistas junior necesitan mentoría presencial."}},{"id":"skim-2","title":"Pasaje B: Transición Energética Industrial","topic":"Lectura Panorámica B1 (15s)","tokens":[{"text":"Despite","role":"contrast"},{"text":"high installation costs,","role":"normal"},{"text":"regional factories","role":"subject"},{"text":"have adopted","role":"verb"},{"text":"solar microgrids","role":"normal"},{"text":"since 2022.","role":"normal"},{"text":"In spite of","role":"contrast"},{"text":"initial skepticism,","role":"normal"},{"text":"these plants","role":"subject"},{"text":"now","role":"normal"},{"text":"save","role":"verb"},{"text":"thousands monthly.","role":"normal"}],"summaryCheck":{"question":"Según los sujetos, verbos y conectores de contraste, ¿qué hicieron las fábricas?","options":["Rechazaron los paneles solares por su alto costo.","Adoptaron microrredes solares desde 2022 y ahora ahorran dinero.","Cerraron en 2022 por escepticismo técnico."],"correct":"Adoptaron microrredes solares desde 2022 y ahora ahorran dinero."}}],"risks":[{"id":"risk-listening","title":"Acondicionamiento Auditivo en Tiempo Real (Días 7–8)","severity":"Crítico","description":"Dominar los Días 1 al 6 blinda tu arquitectura gramatical, pero EnglishScore evalúa Listening con acentos británicos, australianos e indios en audio de una sola reproducción sin subtítulos.","action":"Practica dictado rápido y shadowing de 15 minutos diarios antes de presentar el examen real."},{"id":"risk-biometric","title":"Vigilancia Biométrica y Protocolo de Cámara (Días 9–10)","severity":"Eliminatorio","description":"La aplicación monitorea el seguimiento ocular y el entorno con la cámara frontal. Desviar la mirada repetidamente para pensar o leer notas fuera de pantalla invalida automáticamente el certificado.","action":"Simula toda la prueba mirando al centro de la pantalla, en habitación iluminada y sin ruido de fondo."},{"id":"risk-stress","title":"Colapso Nervioso bajo el Límite de 45 Segundos","severity":"Alto","description":"El estrés en los primeros 5 ítems degrada la precisión y provoca que el algoritmo te envíe a la ruta Breakthrough (A1/A2), haciendo matemáticamente imposible superar los 300 puntos.","action":"Si detectas bloqueo \u003e30s, aplica descarte gramatical inmediato (Día 6) y protege el ritmo."}]};
+    const STORAGE_KEY = 'englishscore_b1_html_v1';
+
+    let state = {
+      section: 'trainer',
+      dayId: 1,
+      stage: 'execution',
+      results: {},
+      // Verification session state
+      vStarted: false,
+      vFinished: false,
+      vIndex: 0,
+      vFeedback: null,
+      vItemSec: 0,
+      vTotalSec: 0,
+      vRecords: [],
+      vShowScanner: false,
+      vTimerId: null,
+      // Fallback interactive states
+      timelineYear: 2020,
+      certaintyPct: 99,
+      // Reversion answers
+      revAnswers: {},
+      // Skimming state
+      skimIdx: 0,
+      skimRunning: false,
+      skimSec: 15,
+      skimPicked: [],
+      skimSummaryPick: null,
+      skimTimerId: null,
+      // Risks checklist
+      riskChecked: {}
+    };
+
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) state.results = JSON.parse(saved);
+    } catch (e) {}
+
+    function saveResults() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state.results));
+      } catch (e) {}
+    }
+
+    function esc(s) {
+      return String(s || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function fmtClock(sec) {
+      const s = Math.max(0, sec);
+      return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
+    }
+
+    function stopTimers() {
+      if (state.vTimerId) { clearInterval(state.vTimerId); state.vTimerId = null; }
+      if (state.skimTimerId) { clearInterval(state.skimTimerId); state.skimTimerId = null; }
+    }
+
+    function setSection(sec) {
+      stopTimers();
+      state.section = sec;
+      state.vStarted = false;
+      state.skimRunning = false;
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      const activeBtn = document.getElementById('nav-' + sec);
+      if (activeBtn) activeBtn.classList.add('active');
+      render();
+    }
+
+    function selectDay(id) {
+      stopTimers();
+      state.dayId = id;
+      state.stage = 'execution';
+      resetVerificationState();
+      state.revAnswers = {};
+      render();
+    }
+
+    function selectStage(st) {
+      stopTimers();
+      state.stage = st;
+      if (st !== 'verification') state.vStarted = false;
+      render();
+    }
+
+    function resetVerificationState() {
+      state.vStarted = false;
+      state.vFinished = false;
+      state.vIndex = 0;
+      state.vFeedback = null;
+      state.vItemSec = 0;
+      state.vTotalSec = 0;
+      state.vRecords = [];
+      state.vShowScanner = false;
+    }
+
+    function startVerification() {
+      stopTimers();
+      resetVerificationState();
+      state.vStarted = true;
+      const day = COURSE.days.find(d => d.id === state.dayId);
+      state.vTimerId = setInterval(() => {
+        if (!state.vStarted || state.vFinished) return;
+        state.vTotalSec += 1;
+        state.vItemSec += 1;
+
+        if (day.totalExamTimeLimitSec && state.vTotalSec >= day.totalExamTimeLimitSec) {
+          const rem = day.questions.slice(state.vIndex).map(q => ({
+            questionId: q.id,
+            prompt: q.prompt,
+            userAnswer: '(Tiempo agotado)',
+            correctAnswer: q.correctAnswer,
+            isCorrect: false,
+            seconds: state.vItemSec,
+            timedOut: true,
+            errorReason: 'Se agotó el límite de 10 minutos.',
+            cambridgeRule: q.explanation
+          }));
+          finishVerification(state.vRecords.concat(rem));
+          return;
+        }
+        if (day.questionTimeLimitSec && state.vItemSec >= day.questionTimeLimitSec && !state.vFeedback) {
+          const q = day.questions[state.vIndex];
+          const reason = 'Tiempo agotado (' + day.questionTimeLimitSec + 's). La latencia excesiva penaliza la ruta adaptativa.';
+          state.vFeedback = {
+            isCorrect: false,
+            headline: 'Tiempo agotado (' + day.questionTimeLimitSec + 's). Respuesta esperada: "' + q.correctAnswer + '".',
+            errorDetail: reason,
+            cambridgeRule: q.explanation,
+            trap: q.trapWarning
+          };
+          state.vRecords.push({
+            questionId: q.id,
+            prompt: q.prompt,
+            userAnswer: '(Tiempo agotado)',
+            correctAnswer: q.correctAnswer,
+            isCorrect: false,
+            seconds: day.questionTimeLimitSec,
+            timedOut: true,
+            errorReason: reason,
+            cambridgeRule: q.explanation
+          });
+        }
+        updateTimerDom(day);
+      }, 1000);
+      render();
+    }
+
+    function updateTimerDom(day) {
+      const el = document.getElementById('v-timer-display');
+      if (!el) { render(); return; }
+      if (state.vFeedback) { render(); return; }
+      let txt = '';
+      let urgent = false;
+      if (day.questionTimeLimitSec) {
+        const rem = Math.max(0, day.questionTimeLimitSec - state.vItemSec);
+        txt = 'Ítem: ' + fmtClock(rem) + ' | Total: ' + fmtClock(state.vTotalSec);
+        urgent = rem <= 7;
+      } else if (day.totalExamTimeLimitSec) {
+        const rem = Math.max(0, day.totalExamTimeLimitSec - state.vTotalSec);
+        txt = 'Restante: ' + fmtClock(rem);
+        urgent = rem <= 60;
+      } else {
+        txt = 'Ítem: ' + fmtClock(state.vItemSec) + ' | Total: ' + fmtClock(state.vTotalSec);
+        urgent = state.vItemSec > 45;
+      }
+      el.textContent = txt;
+      el.className = 'timer' + (urgent ? ' urgent' : '');
+    }
+
+    function normEng(val) {
+      let s = String(val || '')
+        .toLowerCase()
+        .trim()
+        .replace(/[’‘ʼ´`]/g, "'")
+        .replace(/[.!?,;:]+$/g, '')
+        .replace(/\s+/g, ' ')
+        .replace(/\b2\b/g, 'two')
+        .replace(/\b5\b/g, 'five');
+
+      const reps = [
+        [/\bi've not\b/g, 'i have not'],
+        [/\byou've not\b/g, 'you have not'],
+        [/\bwe've not\b/g, 'we have not'],
+        [/\bthey've not\b/g, 'they have not'],
+        [/\bshe's not\b/g, 'she has not'],
+        [/\bhe's not\b/g, 'he has not'],
+        [/\bi've\b/g, 'i have'],
+        [/\byou've\b/g, 'you have'],
+        [/\bwe've\b/g, 'we have'],
+        [/\bthey've\b/g, 'they have'],
+        [/\bshe's\b/g, 'she has'],
+        [/\bhe's\b/g, 'he has'],
+        [/\bhaven't\b/g, 'have not'],
+        [/\bhasn't\b/g, 'has not'],
+        [/\bi'm\b/g, 'i am'],
+        [/\byou're\b/g, 'you are'],
+        [/\bwe're\b/g, 'we are'],
+        [/\bthey're\b/g, 'they are'],
+        [/\bdon't\b/g, 'do not'],
+        [/\bdoesn't\b/g, 'does not'],
+        [/\bdidn't\b/g, 'did not'],
+        [/\bcan't\b/g, 'cannot'],
+        [/\bcan not\b/g, 'cannot']
+      ];
+      for (let i = 0; i < reps.length; i++) {
+        s = s.replace(reps[i][0], reps[i][1]);
+      }
+      return s.replace(/\s+/g, ' ').trim();
+    }
+
+    function diagnoseTrError(val, qId) {
+      const n = normEng(val);
+      if (/\bsince\b.*\bago\b/.test(n)) {
+        return 'Error L1: "since ... ago" es agramatical. Para duración hasta hoy usa "for" (ej. for two months).';
+      }
+      if (/\bsince (five|5|two|2) (years|months)\b/.test(n)) {
+        return 'Error de preposición temporal: duración ("five years", "two months") exige "for", nunca "since".';
+      }
+      if (/\bfor (2020|monday|march|university|college)\b/.test(n)) {
+        return 'Error de preposición temporal: puntos de inicio (2020, Monday, March, university) exigen "since".';
+      }
+      if (/^(i live|she works|we know|he already finishes|he finishes|i have this laptop|i study)\b/.test(n)) {
+        return 'Error crítico L1 (Presente Simple): tradujiste en Presente Simple igual que en español. En Cambridge B1 la continuidad hasta el presente exige Present Perfect (have/has + participio).';
+      }
+      if (/\b(did not|didn't|did you ever|i lived|she worked|we knew|we saw|i sent)\b/.test(n) && !/\b(have|has)\b/.test(n)) {
+        return 'Error de tiempo verbal (Past Simple): falta el auxiliar "have/has". El Pasado Simple desconecta la acción del presente.';
+      }
+      if (/\b(she have|he have)\b/.test(n)) {
+        return 'Error de concordancia: con "she / he" el auxiliar debe ser "has" (o contracción "'s"), nunca "have".';
+      }
+      if (/\bknowed\b|\bknew\b/.test(n)) {
+        return 'Error de participio irregular: el participio de "know" es "known" (know – knew – known).';
+      }
+      if (/\bsaw\b|\bseed\b/.test(n)) {
+        return 'Error de participio irregular: tras "haven't / have not" se exige "seen" (see – saw – seen), no "saw".';
+      }
+      if (/\bfinish(ed)? to\b/.test(n)) {
+        return 'Error de calco L1 ("acaban de"): en inglés se expresa con "have/has + just + participio".';
+      }
+      if (/\bgone to\b/.test(n) && qId === 'd2-q9') {
+        return 'Matiz Cambridge B1: para experiencias de viaje con retorno se usa "been to", no "gone to".';
+      }
+      if (/\byet\b/.test(n) && !/\byet$/.test(n)) {
+        return 'Error de sintaxis: "yet" en oraciones negativas debe ir al final de la frase.';
+      }
+      if (qId === 'd2-q7' && !/\bhave had\b/.test(n)) {
+        return 'Error estructural: faltó combinar auxiliar "have" + participio "had" ("I have had" / "I've had").';
+      }
+      return 'Revisa el auxiliar (have/has o contracción), el participio pasado y la preposición temporal (since/for) o adverbio (just/already/yet).';
+    }
+
+    function pickOption(opt) {
+      if (state.vFeedback) return;
+      const day = COURSE.days.find(d => d.id === state.dayId);
+      const q = day.questions[state.vIndex];
+      const ok = opt === q.correctAnswer;
+      const specificError = ok ? '' : ((q.optionErrors && q.optionErrors[opt]) || ('La opción "' + opt + '" es incorrecta en este contexto.'));
+      state.vFeedback = {
+        isCorrect: ok,
+        picked: opt,
+        headline: ok ? 'Correcto (' + state.vItemSec + 's): "' + q.correctAnswer + '".' : 'Incorrecto — elegiste "' + opt + '". Respuesta correcta: "' + q.correctAnswer + '".',
+        errorDetail: specificError,
+        cambridgeRule: q.explanation,
+        trap: ok ? '' : q.trapWarning
+      };
+      state.vRecords.push({
+        questionId: q.id,
+        prompt: q.prompt,
+        userAnswer: opt,
+        correctAnswer: q.correctAnswer,
+        isCorrect: ok,
+        seconds: state.vItemSec,
+        timedOut: false,
+        errorReason: specificError,
+        cambridgeRule: q.explanation
+      });
+      render();
+    }
+
+    function submitTranslation(e) {
+      e.preventDefault();
+      if (state.vFeedback) return;
+      const inp = document.getElementById('tr-input');
+      if (!inp || !inp.value.trim()) return;
+      const day = COURSE.days.find(d => d.id === state.dayId);
+      const q = day.questions[state.vIndex];
+      const normUser = normEng(inp.value);
+      const accepted = q.acceptedAnswers || [q.correctAnswer];
+      const ok = accepted.some(a => normEng(a) === normUser);
+      const specificError = ok ? '' : diagnoseTrError(inp.value, q.id);
+      state.vFeedback = {
+        isCorrect: ok,
+        headline: ok ? 'Correcto (' + state.vItemSec + 's). Se aceptan contracciones y formas completas.' : 'Incorrecto — escribiste "' + inp.value.trim() + '". Esperada: "' + q.correctAnswer + '".',
+        errorDetail: specificError,
+        cambridgeRule: q.explanation,
+        trap: ok ? '' : q.trapWarning
+      };
+      state.vRecords.push({
+        questionId: q.id,
+        prompt: q.prompt,
+        userAnswer: inp.value.trim(),
+        correctAnswer: q.correctAnswer,
+        isCorrect: ok,
+        seconds: state.vItemSec,
+        timedOut: false,
+        errorReason: specificError,
+        cambridgeRule: q.explanation
+      });
+      render();
+    }
+
+    function nextQuestion() {
+      const day = COURSE.days.find(d => d.id === state.dayId);
+      if (state.vIndex + 1 >= day.questions.length) {
+        finishVerification(state.vRecords);
+        return;
+      }
+      state.vIndex += 1;
+      state.vFeedback = null;
+      state.vItemSec = 0;
+      state.vShowScanner = false;
+      render();
+    }
+
+    function finishVerification(records) {
+      stopTimers();
+      state.vFinished = true;
+      const day = COURSE.days.find(d => d.id === state.dayId);
+      const correctCount = records.filter(r => r.isCorrect).length;
+      const totalCount = day.questions.length;
+      const accuracy = Math.round((correctCount / totalCount) * 100);
+      const avgSec = records.length ? Math.round((records.reduce((a, r) => a + r.seconds, 0) / records.length) * 10) / 10 : 0;
+      const maxSec = records.reduce((m, r) => Math.max(m, r.seconds), 0);
+      const timedOutCount = records.filter(r => r.timedOut).length;
+      const rupture = (day.id === 5 || day.id === 6) && (avgSec > 45 || maxSec > 45 || timedOutCount > 0);
+      state.results[day.id] = { accuracy, correctCount, totalCount, avgSec, maxSec, rupture };
+      saveResults();
+      render();
+    }
+
+    function startSkimming() {
+      stopTimers();
+      state.skimPicked = [];
+      state.skimSummaryPick = null;
+      state.skimSec = 15;
+      state.skimRunning = true;
+      state.skimTimerId = setInterval(() => {
+        state.skimSec = Math.max(0, state.skimSec - 1);
+        if (state.skimSec === 0) {
+          state.skimRunning = false;
+          stopTimers();
+          render();
+        } else {
+          const el = document.getElementById('skim-clock');
+          if (el) el.textContent = '00:' + String(state.skimSec).padStart(2, '0');
+        }
+      }, 1000);
+      render();
+    }
+
+    function toggleSkimToken(idx) {
+      if (!state.skimRunning && state.skimSec === 15) return;
+      if (state.skimPicked.includes(idx)) state.skimPicked = state.skimPicked.filter(i => i !== idx);
+      else state.skimPicked.push(idx);
+      render();
+    }
+
+    function render() {
+      const root = document.getElementById('app');
+      if (state.section === 'trainer') {
+        const day = COURSE.days.find(d => d.id === state.dayId);
+        const dayStrip = COURSE.days.map(d => {
+          const r = state.results[d.id];
+          const label = r ? d.shortTitle + ' (' + r.accuracy + '%)' : d.shortTitle;
+          return '<button class="nav-btn ' + (d.id === day.id ? 'active' : '') + '" onclick="selectDay(' + d.id + ')">' + esc(label) + '</button>';
+        }).join('');
+
+        const tabs = [
+          { id: 'execution', label: '1. Ejecución' },
+          { id: 'verification', label: '2. Verificación (' + day.questions.length + ')' },
+          { id: 'fallback', label: '3. Fallback' },
+          { id: 'reversion', label: '4. Reversión' }
+        ].map(t => '<button class="stage-btn ' + (state.stage === t.id ? 'active' : '') + '" onclick="selectStage(\'' + t.id + '\')">' + esc(t.label) + '</button>').join('');
+
+        let stageHtml = '';
+        if (state.stage === 'execution') {
+          const rules = day.execution.rules.map(r =>
+            '<div class="rule-box"><strong>' + esc(r.title) + '</strong><code class="formula">' + esc(r.formula) + '</code><div style="font-size:13px;color:#475569">' + esc(r.note) + '</div></div>'
+          ).join('');
+          const rows = day.execution.l1TrapExamples.map(ex =>
+            '<tr><td class="bad">' + esc(ex.wrong) + '</td><td class="good">' + esc(ex.right) + '</td><td>' + esc(ex.reason) + '</td></tr>'
+          ).join('');
+          stageHtml =
+            '<div class="card">' +
+              '<div class="kicker">' + esc(day.shortTitle) + ' · ' + esc(day.timeLimitLabel) + '</div>' +
+              '<h2>' + esc(day.title) + '</h2>' +
+              '<p>' + esc(day.objective) + '</p>' +
+              '<div class="rule-box"><strong>Criterio de Ingeniería Inversa (Cambridge B1)</strong><p style="margin:6px 0 0">' + esc(day.execution.principle) + '</p></div>' +
+              '<h3>Reglas Operativas</h3>' + rules +
+              '<h3>Contraste Anti-Interferencia (Español L1 vs. EnglishScore B1)</h3>' +
+              '<table><thead><tr><th>Trampa L1</th><th>Forma Correcta B1</th><th>Explicación</th></tr></thead><tbody>' + rows + '</tbody></table>' +
+              '<div style="margin-top:16px"><button class="btn-primary" onclick="selectStage(\'verification\')">Iniciar Verificación →</button></div>' +
+            '</div>';
+        } else if (state.stage === 'verification') {
+          if (!state.vStarted) {
+            stageHtml =
+              '<div class="card">' +
+                '<div class="kicker">' + esc(day.shortTitle) + ' · Simulador Cronometrado</div>' +
+                '<h2>Verificación (' + day.questions.length + ' ítems · Meta ' + day.targetAccuracy + '%)</h2>' +
+                '<p>' + esc(day.verificationInstructions) + '</p>' +
+                '<button class="btn-primary" onclick="startVerification()">Comenzar Verificación →</button>' +
+              '</div>';
+          } else if (state.vFinished) {
+            const res = state.results[day.id];
+            const passed = res.accuracy >= day.targetAccuracy && !res.rupture;
+            const missed = state.vRecords.filter(r => !r.isCorrect);
+            const missedHtml = missed.length
+              ? '<div class="card"><h3>Revisión de Errores (' + missed.length + ') — Diagnóstico Cambridge</h3>' + missed.map(m =>
+                  '<div class="rule-box"><div><strong>' + esc(m.prompt) + '</strong></div>' +
+                  '<div style="font-size:13px;margin-top:4px"><span class="bad">Tu respuesta: ' + esc(m.userAnswer) + '</span> · <span class="good">Correcta: ' + esc(m.correctAnswer) + '</span></div>' +
+                  (m.errorReason ? '<div style="font-size:13px;color:#991b1b;margin-top:4px"><strong>Por qué falla:</strong> ' + esc(m.errorReason) + '</div>' : '') +
+                  '<div style="font-size:13px;color:#334155;margin-top:4px"><strong>Regla Cambridge:</strong> ' + esc(m.cambridgeRule) + '</div></div>'
+                ).join('') + '</div>'
+              : '';
+            stageHtml =
+              '<div class="card">' +
+                '<div class="kicker">Resultado · ' + esc(day.shortTitle) + '</div>' +
+                '<h2>' + (passed ? 'Objetivo superado (Ruta Threshold B1)' : 'Requiere ajuste (Fallback / Reversión)') + '</h2>' +
+                '<div class="grid-3">' +
+                  '<div class="rule-box"><div class="kicker">Precisión</div><strong style="font-size:20px">' + res.accuracy + '% (' + res.correctCount + '/' + res.totalCount + ')</strong></div>' +
+                  '<div class="rule-box"><div class="kicker">Promedio / ítem</div><strong style="font-size:20px">' + res.avgSec + 's</strong></div>' +
+                  '<div class="rule-box"><div class="kicker">Pico máximo</div><strong style="font-size:20px">' + res.maxSec + 's</strong></div>' +
+                '</div>' +
+                (res.rupture ? '<div class="warn-box"><strong>Señal de ruptura (&gt;45s):</strong> Migra temporalmente al Modo Skimming de 15 segundos. <div style="margin-top:8px"><button class="btn-secondary" onclick="setSection(\'skimming\')">Ir a Modo Skimming</button></div></div>' : '') +
+                (!passed ? '<div class="warn-box"><strong>Recomendación:</strong> Activa el Fallback o el Protocolo de Reversión antes de reintentar.<div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn-secondary" onclick="selectStage(\'fallback\')">Abrir Fallback</button><button class="btn-secondary" onclick="selectStage(\'reversion\')">Ejecutar Reversión</button></div></div>' : '') +
+                '<div style="margin-top:16px"><button class="btn-primary" onclick="startVerification()">Reintentar batería</button></div>' +
+              '</div>' + missedHtml;
+          } else {
+            const q = day.questions[state.vIndex];
+            const pct = Math.round(((state.vIndex + (state.vFeedback ? 1 : 0)) / day.questions.length) * 100);
+            let inputsHtml = '';
+            if (q.options) {
+              inputsHtml = '<div class="grid-3" style="margin-top:16px">' + q.options.map((opt, idx) => {
+                let cls = 'opt-btn';
+                if (state.vFeedback) {
+                  if (opt === q.correctAnswer) cls += ' ok';
+                  else if (state.vFeedback.picked === opt && !state.vFeedback.isCorrect) cls += ' err';
+                }
+                const safeOpt = esc(opt).replace(/'/g, '&#39;');
+                return '<button class="' + cls + '" ' + (state.vFeedback ? 'disabled' : '') + ' onclick="pickOption(this.dataset.opt)" data-opt="' + safeOpt + '"><strong>' + ['A','B','C'][idx] + '.</strong> ' + esc(opt) + '</button>';
+              }).join('') + '</div>';
+            } else {
+              inputsHtml =
+                '<form onsubmit="submitTranslation(event)" style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap">' +
+                  '<input id="tr-input" type="text" placeholder="Ej. I\x27ve lived here since 2020. (se aceptan contracciones)" ' + (state.vFeedback ? 'disabled' : '') + ' />' +
+                  '<button class="btn-primary" type="submit" ' + (state.vFeedback ? 'disabled' : '') + '>Validar frase</button>' +
+                '</form>';
+            }
+            const scannerHtml = (day.id === 6 && q.postGapToken)
+              ? '<div style="margin-top:10px"><button class="btn-secondary" onclick="state.vShowScanner=!state.vShowScanner;render()">' + (state.vShowScanner ? 'Ocultar escáner post-hueco' : 'Activar escáner post-hueco (Fallback)') + '</button>' +
+                (state.vShowScanner ? '<div class="rule-box">Token inmediato: <strong style="color:#1d4ed8">' + esc(q.postGapToken) + '</strong> → ' + (q.postGapType === 'noun_gerund' ? 'Bloque nominal/gerundio: tacha Although.' : 'Cláusula con verbo conjugado o puntuación fuerte: tacha Despite.') + '</div>' : '') + '</div>'
+              : '';
+
+            stageHtml =
+              '<div class="card">' +
+                '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">' +
+                  '<div class="kicker">Ítem ' + (state.vIndex + 1) + ' de ' + day.questions.length + '</div>' +
+                  '<div id="v-timer-display" class="timer">Tiempo activo</div>' +
+                '</div>' +
+                '<div class="progress-bar"><div class="progress-fill" style="width:' + pct + '%"></div></div>' +
+                '<div style="font-size:18px;font-weight:600">' + esc(q.prompt) + '</div>' +
+                scannerHtml +
+                inputsHtml +
+                (state.vFeedback ? '<div class="feedback ' + (state.vFeedback.isCorrect ? 'ok' : 'err') + '"><strong>' + esc(state.vFeedback.headline) + '</strong>' +
+                  (!state.vFeedback.isCorrect && state.vFeedback.errorDetail ? '<div style="margin-top:6px;background:rgba(255,255,255,0.7);padding:8px 10px;border-radius:6px;font-size:13px"><strong>Diagnóstico del error:</strong> ' + esc(state.vFeedback.errorDetail) + '</div>' : '') +
+                  '<div style="margin-top:6px;font-size:13px"><strong>Explicación Cambridge:</strong> ' + esc(state.vFeedback.cambridgeRule) + '</div>' +
+                  (state.vFeedback.trap ? '<div style="margin-top:4px;font-size:12px;opacity:0.85">' + esc(state.vFeedback.trap) + '</div>' : '') +
+                  '<div style="margin-top:10px"><button class="btn-primary" onclick="nextQuestion()">' + (state.vIndex + 1 >= day.questions.length ? 'Ver diagnóstico' : 'Siguiente ítem →') + '</button></div></div>' : '') +
+              '</div>';
+          }
+        } else if (state.stage === 'fallback') {
+          let extraTool = '';
+          if (day.id === 2) {
+            extraTool = '<div class="rule-box"><strong>Línea Temporal: Inicio ' + state.timelineYear + ' → 2026 (AHORA)</strong><input type="range" min="2015" max="2025" value="' + state.timelineYear + '" oninput="state.timelineYear=Number(this.value);render()" style="width:100%;margin:8px 0" /><div>SINCE: <code>I have lived here since ' + state.timelineYear + '.</code> · FOR: <code>I have lived here for ' + (2026 - state.timelineYear) + ' years.</code></div></div>';
+          } else if (day.id === 3) {
+            const modalTxt = state.certaintyPct >= 85 ? 'MUST (99% Afirmativo) / CAN’T (99% Negativo)' : (state.certaintyPct >= 35 ? 'MIGHT / MAY (50% Probable)' : 'CAN’T (Imposibilidad lógica)');
+            extraTool = '<div class="rule-box"><strong>Termómetro de Certeza: ' + state.certaintyPct + '% → ' + modalTxt + '</strong><input type="range" min="0" max="100" value="' + state.certaintyPct + '" oninput="state.certaintyPct=Number(this.value);render()" style="width:100%;margin:8px 0" /></div>';
+          }
+          const items = day.fallback.items.map(f =>
+            '<div class="rule-box"><strong>' + esc(f.label) + '</strong> · <span style="color:#1d4ed8;font-weight:600">' + esc(f.category) + '</span><div style="font-size:13px;color:#475569;margin-top:4px">' + esc(f.detail) + '</div></div>'
+          ).join('');
+          stageHtml =
+            '<div class="card">' +
+              '<div class="kicker">Fallback · ' + esc(day.fallback.triggerCondition) + '</div>' +
+              '<h2>' + esc(day.fallback.title) + '</h2>' +
+              '<p>' + esc(day.fallback.summary) + '</p>' +
+              extraTool +
+              '<div class="grid-2">' + items + '</div>' +
+              '<div style="margin-top:16px"><button class="btn-primary" onclick="selectStage(\'verification\')">Volver a Verificación</button></div>' +
+            '</div>';
+        } else if (state.stage === 'reversion') {
+          const items = day.reversion.items.map((it, idx) => {
+            const picked = state.revAnswers[it.id];
+            const btns = it.options.map(opt => {
+              let cls = 'btn-secondary';
+              if (picked === opt) cls = opt === it.correct ? 'opt-btn ok' : 'opt-btn err';
+              return '<button style="width:auto;padding:8px 14px" class="' + cls + '" data-id="' + esc(it.id) + '" data-opt="' + esc(opt) + '" onclick="state.revAnswers[this.dataset.id]=this.dataset.opt;render()">' + esc(opt) + '</button>';
+            }).join(' ');
+            const errReason = (picked && picked !== it.correct && it.optionErrors && it.optionErrors[picked])
+              ? '<div><strong>Por qué falla:</strong> ' + esc(it.optionErrors[picked]) + '</div>'
+              : '';
+            const fb = picked
+              ? '<div style="margin-top:8px;font-size:13px;color:' + (picked === it.correct ? '#047857' : '#991b1b') + '"><strong>' + (picked === it.correct ? 'Correcto. ' : 'Incorrecto (elegiste "' + esc(picked) + '"). Correcta: "' + esc(it.correct) + '". ') + '</strong>' + errReason + '<div><strong>Regla Cambridge:</strong> ' + esc(it.rule) + '</div></div>'
+              : '';
+            return '<div class="rule-box"><div><strong>' + (idx + 1) + '. ' + esc(it.prompt) + '</strong></div><div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">' + btns + '</div>' + fb + '</div>';
+          }).join('');
+          stageHtml =
+            '<div class="card">' +
+              '<div class="kicker">Reversión · ' + esc(day.reversion.triggerCondition) + '</div>' +
+              '<h2>' + esc(day.reversion.title) + '</h2>' +
+              '<p>' + esc(day.reversion.summary) + '</p>' +
+              items +
+              '<div style="margin-top:16px;display:flex;gap:8px"><button class="btn-secondary" onclick="state.revAnswers={};render()">Reiniciar micro-drill</button><button class="btn-primary" onclick="selectStage(\'verification\')">Reintentar Verificación</button></div>' +
+            '</div>';
+        }
+
+        root.innerHTML =
+          '<div class="day-strip">' + dayStrip + '</div>' +
+          '<div class="stage-tabs">' + tabs + '</div>' +
+          stageHtml;
+
+        if (state.stage === 'verification' && state.vStarted && !state.vFinished) {
+          updateTimerDom(day);
+        }
+      } else if (state.section === 'skimming') {
+        const p = COURSE.skimming[state.skimIdx];
+        const pBtns = COURSE.skimming.map((item, idx) =>
+          '<button class="nav-btn ' + (idx === state.skimIdx ? 'active' : '') + '" onclick="stopTimers();state.skimIdx=' + idx + ';state.skimRunning=false;state.skimSec=15;state.skimPicked=[];state.skimSummaryPick=null;render()">' + esc(item.title) + '</button>'
+        ).join('');
+        const tokensHtml = p.tokens.map((t, idx) => {
+          const picked = state.skimPicked.includes(idx);
+          let cls = 'token';
+          if (picked) {
+            cls += t.role === 'normal' ? ' wrong' : ' ' + t.role;
+          }
+          return '<button class="' + cls + '" onclick="toggleSkimToken(' + idx + ')">' + esc(t.text) + '</button>';
+        }).join('');
+        const targetCount = p.tokens.filter(t => t.role !== 'normal').length;
+        const hits = state.skimPicked.filter(i => p.tokens[i].role !== 'normal').length;
+        const sumOpts = p.summaryCheck.options.map(opt => {
+          let cls = 'opt-btn';
+          if (state.skimSummaryPick) {
+            if (opt === p.summaryCheck.correct) cls += ' ok';
+            else if (state.skimSummaryPick === opt) cls += ' err';
+          }
+          return '<button class="' + cls + '" style="margin-top:8px" data-opt="' + esc(opt) + '" onclick="state.skimSummaryPick=this.dataset.opt;render()">' + esc(opt) + '</button>';
+        }).join('');
+
+        root.innerHTML =
+          '<div class="card">' +
+            '<div class="kicker">Prospectiva · Señal de ruptura y migración</div>' +
+            '<h2>Entrenador de Skimming (15 segundos)</h2>' +
+            '<p>Si inviertes más de 45s por ítem en los Días 5 y 6 o caes en keyword traps, migra temporalmente a este régimen: identifica solo <strong>Sujetos</strong> (azul), <strong>Verbos</strong> (verde) y <strong>Marcadores de Contraste</strong> (ámbar) en 15 segundos.</p>' +
+            '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin:14px 0">' +
+              '<div style="display:flex;gap:8px;flex-wrap:wrap">' + pBtns + '</div>' +
+              '<div style="display:flex;align-items:center;gap:12px"><span id="skim-clock" class="timer">00:' + String(state.skimSec).padStart(2, '0') + '</span><button class="btn-primary" onclick="startSkimming()">Iniciar 15s</button></div>' +
+            '</div>' +
+            '<div class="token-wrap">' + tokensHtml + '</div>' +
+            '<div class="kicker">Nodos estructurales capturados: ' + hits + ' / ' + targetCount + '</div>' +
+            '<hr style="border:none;border-top:1px solid #e2e8f0;margin:18px 0" />' +
+            '<h3>' + esc(p.summaryCheck.question) + '</h3>' +
+            sumOpts +
+          '</div>';
+      } else if (state.section === 'risks') {
+        const risksHtml = COURSE.risks.map(r =>
+          '<div class="rule-box"><div class="kicker">Riesgo ' + esc(r.severity) + '</div><strong>' + esc(r.title) + '</strong><p style="margin:6px 0">' + esc(r.description) + '</p><div style="font-size:13px;font-weight:600">Mitigación: ' + esc(r.action) + '</div></div>'
+        ).join('');
+        const checks = [
+          'Iluminación frontal uniforme para seguimiento biométrico.',
+          'Mirada fija al centro de la pantalla (no desviar los ojos fuera del monitor).',
+          'Auriculares o silencio total para acentos UK / AU / IN en única reproducción.',
+          'Control respiratorio en los primeros 5 ítems para asegurar ruta Threshold.',
+          'Corte de decisión a los 30s usando descarte gramatical antes del límite de 45s.'
+        ];
+        const checkHtml = checks.map((c, idx) => {
+          const on = Boolean(state.riskChecked[idx]);
+          return '<div class="check-row" onclick="state.riskChecked[' + idx + ']=!state.riskChecked[' + idx + '];render()"><input type="checkbox" ' + (on ? 'checked' : '') + ' style="pointer-events:none;margin-top:4px" /><span style="' + (on ? 'text-decoration:line-through;color:#64748b' : '') + '">' + esc(c) + '</span></div>';
+        }).join('');
+        root.innerHTML =
+          '<div class="card">' +
+            '<div class="kicker">Riesgos Residuales Declarados · Días 7 al 10</div>' +
+            '<h2>Ilusión de Competencia Teórica y Protocolo Biométrico</h2>' +
+            '<div class="grid-3">' + risksHtml + '</div>' +
+          '</div>' +
+          '<div class="card">' +
+            '<h3>Lista de Verificación Pre-Examen</h3>' +
+            checkHtml +
+          '</div>';
+      }
+    }
+
+    render();
+  </script>
+</body>
+</html>
